@@ -1,0 +1,50 @@
+<script>
+    function updateRecords() {
+        link = "/home/ajax_nurse_dashboard_list?location=" + '<%= params[:location].titleize rescue "unknown" %>';
+        getData(link);
+    }
+    function handleResults(data){
+        if (data.length > 0)
+        {
+            reloadTable('dataSection',data,[['name', 15],['test', 50],['priority', 5],['status', 15], ['action', '']],"")
+        }
+    }
+
+    setTimeout("updateRecords()", 1000)
+    setInterval("updateRecords()", 3000)
+</script>
+
+<div class="container" style="">
+  <div class="table-row">
+    <div  class="col">
+      <div style="display: table;width: 100%;">
+        <div style="display: table-header-group" id="heading">
+          <div class="table-header-cell" style="width: 15%">
+            Patient
+          </div>
+          <div class="table-header-cell" style="width: 50%">
+            Test
+          </div>
+          <div class="table-header-cell" style="width: 5%">
+            Priority
+          </div>
+          <div class="table-header-cell" style="width: 15%">
+            Status
+          </div>
+          <div class="table-header-cell">
+            &nbsp;
+          </div>
+        </div>
+      </div>
+      <div style="overflow: hidden;">
+        <div style="display: table;width: 100%;">
+          <div id="dataSection" style="display: table;width: 100%;">
+
+          </div>
+        </div>
+        <div id="summary" class="summary"><b>Showing 0/0</b></div>
+      </div>
+
+    </div>
+  </div>
+</div>

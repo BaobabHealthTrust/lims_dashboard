@@ -1,0 +1,70 @@
+<script>
+  function updateRecords() {
+      link = "/home/ajax_lab_reception_list?location=" + '<%= params[:location].titleize rescue "unknown" %>';
+      getData(link);
+  }
+  function handleResults(data){
+    if (data.length > 0)
+    {
+        reloadTable('dataSection',data,[['name', 15],['orderer', 15],['test', 50],['priority', 5], ['action', '']], "tableContainer")
+    }
+  }
+  setTimeout("updateRecords()", 3000)
+  setInterval("updateRecords()", 3000)
+</script>
+
+<div class="container" style="height: 99%;">
+  <div class="table-row">
+    <div class="col" style="height:100%;width: 10%;">
+      <div class="value-container">
+        Ordered <br>
+        <span class="indicator" id="ordered"><%= @ordered %></span>
+      </div>
+      <div class="value-container">
+        Received<br>
+        <span class="indicator" id="received"><%= @received %></span>
+      </div>
+      <div class="value-container">
+        Tested<br>
+        <span class="indicator" id="tested"><%= @tested %></span>
+      </div>
+      <div class="value-container">
+        Pending<br>
+        <span class="indicator" id="pending"><%= @pending %></span>
+      </div>
+      <div class="value-container">
+        TA Time<br>
+        <span class="indicator" id="turn-around"><%= @turn_around %></span>
+      </div>
+    </div>
+    <div class="col" id="tableContainer">
+        <div style="display: table;width: 99%;margin-left: auto;margin-right: auto;">
+          <div style="display: table-header-group" id="heading">
+            <div class="table-header-cell" style="width: 15%">
+              Patient
+            </div>
+            <div class="table-header-cell" style="width: 15%">
+              Requested By
+            </div>
+            <div class="table-header-cell" style="width: 50%">
+              Test
+            </div>
+            <div class="table-header-cell" style="width: 5%">
+              Priority
+            </div>
+            <div class="table-header-cell">
+              Viability
+            </div>
+          </div>
+        </div>
+        <div id="main_container" >
+          <div style="display: table;width: 100%;width: 99%;margin-left: auto;margin-right: auto;">
+            <div id="dataSection" style="display: table;width: 100%;">
+
+            </div>
+            <div id="summary" class="summary"><b>Showing 0 / 0</b></div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>

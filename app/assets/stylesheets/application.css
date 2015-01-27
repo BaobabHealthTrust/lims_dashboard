@@ -1,0 +1,127 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+body{
+    font-family: Verdana, Geneva, sans-serif;
+    -moz-user-select:none;
+}
+div.header{
+    position:fixed;
+    top:0px;
+    left:0px;
+    padding:10px;
+    background-color: #006295;
+    color: #FFFFFF;
+    width: 100%;
+    font-size: 150%;
+
+}
+
+div.footer{
+    position:fixed;
+    left:0px;
+    bottom: 0px;
+    padding:10px;
+    background-color: #006295;
+    color: #FFFFFF;
+    width: 100%;
+    font-size: 150%;
+    display: none;
+}
+
+#clockbox{
+    float: right;
+    margin-right: 15px;
+}
+
+#location{
+    float: left;
+    font-weight: bold;
+    font-size: 120%;
+}
+
+.container{
+    display:table;
+    width:99.5%;
+    border-collapse: collapse;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0.5vh;
+}
+
+.heading{
+    font-weight: bold;
+    display:table-row;
+    text-align: center;
+    line-height: 25px;
+    font-size: 14px;
+    font-family:georgia;
+    color:#fff;
+
+}
+.table-row{
+    display:table-row;
+    text-align: center;
+    line-height: 50px;
+}
+.col{
+    display:table-cell;
+    border: 1px solid #CCC;
+}
+
+.value-container{
+    border: 1px solid #834C24;
+    border-radius: 5px;
+    height: 10vh;
+    padding: 2px;
+    font-size: 150%;
+    text-align: center;
+    margin: 3px;
+}
+.table-header-cell{
+    text-align: left;
+    font-size: 160%;
+    display: table-cell;
+    padding-left: 2px;
+    border: 1px solid #ffffff;
+    background-color: #DEDBA7;
+}
+.table-footer-cell{
+    margin-top: 2px;
+    text-align: left;
+    font-size: 160%;
+    display: table-cell;
+    padding-left: 2px;
+    border: 1px solid black;
+    border-width:1px 0px 0px 0px;
+}
+.base-cell{
+    display: table-cell;
+    border:2px solid #ffffff;
+    border-width:0px 1px 0px 0px;
+    font-size: 190%;
+    text-align: left;
+    padding: 0.2em;
+}
+span.indicator{
+    color: #CC0000;
+}
+
+.summary{
+    font-size: 150%;
+
+    background-color: grey;
+    line-height: 40px !important;
+}
