@@ -1,18 +1,14 @@
 module HomeHelper
 
- def lab_dashboard(lab)
+ def lab_dashboard(list)
 
-  priority = ["STAT", "IPD", "OPD"]
-  tests = ["Protein Count", "Uric Acid", "Creatine Kinase", "Alkaline Phosphatase","Blood Urea Nitrogen",
-           "Total Cholesterol", "HIV Monitoring Panel","Malaria","Full Blood Count", "Erythrocyte Sedimentation Rate (ESR)"]
-
-  (1..(15 )).each do |i|
-   @specimens << { 'priority' => priority[rand(3)], 'test' => tests[rand(10)],
-                   "action" => ["viability",rand(100)], 'name' => "Patient #{i}",
-                   "accession_number" => (0...6).map { (65 + rand(26)).chr }.join}
+  (list || []).each do |specimen|
+   @specimens << { 'priority' => 'STAT', 'test' => specimen["test_name"],
+                   "action" => ["viability",rand(100)], 'name' => specimen['patient_name'],
+                   "accession_number" => specimen['accession_number']}
   end
 
-  return @specimens.sort_by { |hsh| [hsh['action'][1],priority.index(hsh['priority']),hsh['test']] }
+  return @specimens.sort_by { |hsh| [hsh['action'][1],hsh['test']] }
  end
 
  def lab_registration(lab)

@@ -13,8 +13,6 @@ class HomeController < ApplicationController
  end
 
  def lab_dashboard
-  @specimens = []
-  @specimens = view_context.lab_dashboard(params[:location])
  end
 
  def nurse_dashboard
@@ -29,7 +27,8 @@ class HomeController < ApplicationController
 
  def ajax_lab_dashboard_list
   @specimens = []
-  render :text => view_context.lab_dashboard(params[:location]).to_json
+  list = Specimen.new().get_specimens(params[:location])
+  render :text => view_context.lab_dashboard(list).to_json
  end
 
  def ajax_nurse_dashboard_list
