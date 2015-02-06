@@ -4,49 +4,46 @@
       getData(link);
   }
   function handleResults(data){
-    if (data.length > 0)
+    if (data.length > -1)
     {
-        reloadTable('dataSection',data,[['name', 15],['orderer', 15],['test', 50],['priority', 5], ['action', '']], "tableContainer")
+        reloadTable('dataSection',data,[['name', 25],['test', 40],['priority', 6.5], ['action', '']], "tableContainer")
     }
   }
-  setTimeout("updateRecords()", 3000)
-  setInterval("updateRecords()", 3000)
+  setTimeout("updateRecords()", 1000)
+  setInterval("updateRecords()", 6000)
 </script>
 
 <div class="container" style="height: 99%;">
   <div class="table-row">
     <div class="col" style="height:100%;width: 10%;">
       <div class="value-container">
-        Ordered <br>
+        <b>Ordered</b> <br>
         <span class="indicator" id="ordered"><%= @ordered %></span>
       </div>
       <div class="value-container">
-        Received<br>
+        <b>Received</b> <br>
         <span class="indicator" id="received"><%= @received %></span>
       </div>
       <div class="value-container">
-        Tested<br>
+       <b>Tested</b><br>
         <span class="indicator" id="tested"><%= @tested %></span>
       </div>
       <div class="value-container">
-        Pending<br>
+        <b>Pending</b> <br>
         <span class="indicator" id="pending"><%= @pending %></span>
       </div>
       <div class="value-container">
-        TA Time<br>
+        <b>TA Time</b><br>
         <span class="indicator" id="turn-around"><%= @turn_around %></span>
       </div>
     </div>
     <div class="col" id="tableContainer">
         <div style="display: table;width: 99%;margin-left: auto;margin-right: auto;">
           <div style="display: table-header-group" id="heading">
-            <div class="table-header-cell" style="width: 15%">
+            <div class="table-header-cell" style="width: 25%">
               Patient
             </div>
-            <div class="table-header-cell" style="width: 15%">
-              Requested By
-            </div>
-            <div class="table-header-cell" style="width: 50%">
+            <div class="table-header-cell" style="width: 40%">
               Test
             </div>
             <div class="table-header-cell" style="width: 5%">

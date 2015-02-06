@@ -84,15 +84,17 @@ div.footer{
 .value-container{
     border: 1px solid #834C24;
     border-radius: 5px;
-    height: 10vh;
+    height: 80px;
     padding: 2px;
-    font-size: 150%;
+    font-size: 25px;
+    line-height: 30px !important;
     text-align: center;
     margin: 3px;
 }
 .table-header-cell{
     text-align: left;
     font-size: 160%;
+    font-weight: bold;
     display: table-cell;
     padding-left: 2px;
     border: 1px solid #ffffff;

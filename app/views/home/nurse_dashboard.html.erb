@@ -4,14 +4,14 @@
         getData(link);
     }
     function handleResults(data){
-        if (data.length > 0)
+        if (data.length > -1)
         {
-            reloadTable('dataSection',data,[['name', 15],['test', 50],['priority', 5],['status', 15], ['action', '']],"")
+            reloadTable('dataSection',data,[['name', 20],['orderer', 15],['test', 35],['priority', 5],['status', 15], ['action', '']],"")
         }
     }
 
     setTimeout("updateRecords()", 1000)
-    setInterval("updateRecords()", 3000)
+    setInterval("updateRecords()", 6000)
 </script>
 
 <div class="container" style="">
@@ -19,10 +19,13 @@
     <div  class="col">
       <div style="display: table;width: 100%;">
         <div style="display: table-header-group" id="heading">
-          <div class="table-header-cell" style="width: 15%">
+          <div class="table-header-cell" style="width: 20%">
             Patient
           </div>
-          <div class="table-header-cell" style="width: 50%">
+          <div class="table-header-cell" style="width: 15%">
+            Ordered By
+          </div>
+          <div class="table-header-cell" style="width: 35%">
             Test
           </div>
           <div class="table-header-cell" style="width: 5%">

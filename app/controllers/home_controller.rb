@@ -20,19 +20,19 @@ class HomeController < ApplicationController
 
  def ajax_lab_reception_list
   @specimens = []
-  @ordered = 20
-  @received = rand(20)
-  render :text => view_context.lab_registration(params[:location]).to_json
+  list = Specimen.new().get_specimens
+  render :text => view_context.lab_registration(list).to_json
  end
 
  def ajax_lab_dashboard_list
   @specimens = []
-  list = Specimen.new().get_specimens(params[:location])
+  list = Specimen.new().get_specimens_with_location(params[:location])
   render :text => view_context.lab_dashboard(list).to_json
  end
 
  def ajax_nurse_dashboard_list
   @specimens = []
-  render :text => view_context.nurse_dashboard(params[:location]).to_json
+  list = Specimen.new().get_specimens
+  render :text => view_context.nurse_dashboard(list).to_json
  end
 end
