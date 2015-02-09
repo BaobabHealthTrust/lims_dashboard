@@ -34,8 +34,8 @@ function reloadTable(section, data, keys, container)
 
     for( i=0 ; i < data.length ; i++)
     {
-        if ((height + (constant * 2.3)) < maxHeight) {
-            html = html + "<div style='display: table-row' class='"+ ((i % 2 == 0) ? 'odd' : 'even') +"'>"
+        if ((table.offsetHeight + constant + 50 ) < maxHeight) {
+            html =  "<div style='display: table-row' class='"+ ((i % 2 == 0) ? 'odd' : 'even') +"'>"
             for(w = 0; w < keys.length ; w++)
             {
                 if (['action'].indexOf(keys[w][0]) != -1)
@@ -57,7 +57,7 @@ function reloadTable(section, data, keys, container)
                 }
             }
             html += "</div>"
-            height += 50;
+            table.innerHTML += html
         }
         else
         {
@@ -65,7 +65,7 @@ function reloadTable(section, data, keys, container)
         }
         count += 1
     }
-    table.innerHTML = html
+
     document.getElementById('summary').innerHTML = "<b>Showing</b> " + count + " / " + data.length
 
 }

@@ -96,7 +96,7 @@ div.footer{
     font-size: 160%;
     font-weight: bold;
     display: table-cell;
-    padding-left: 2px;
+    padding: 3px;
     border: 1px solid #ffffff;
     background-color: #DEDBA7;
 }
@@ -115,7 +115,7 @@ div.footer{
     border-width:0px 1px 0px 0px;
     font-size: 190%;
     text-align: left;
-    padding: 0.2em;
+    padding: 5px;
 }
 span.indicator{
     color: #CC0000;
@@ -123,7 +123,8 @@ span.indicator{
 
 .summary{
     font-size: 150%;
-
+    position: absolute; bottom: 0px;background-color: grey;width: 99.6%;left: 0.2%;
     background-color: grey;
     line-height: 40px !important;
+    text-align: center;
 }
