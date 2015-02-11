@@ -5,12 +5,12 @@ module HomeHelper
   (list || []).each do |specimen|
    unless !['Results Pending'].include?specimen['status']
     @specimens << { 'priority' => 'STAT', 'test' => specimen["test_name"],
-                    "action" => ["viability", (((10 - ((Time.now - specimen["date_collected"].to_time)/1.hour))/10)*100)],
+                    "action" => calculate_viability(specimen["date_collected"], 10),
                     'name' => specimen['patient_name'],"accession_number" => specimen['accession_number']}
    end
   end
 
-  return @specimens.sort_by { |hsh| [hsh['action'][1],hsh['test']] }
+  return @specimens.sort_by { |hsh| [hsh["action"][1],priority.index(hsh['priority']),hsh['test']] }
  end
 
  def lab_registration(specimens)
@@ -22,11 +22,11 @@ module HomeHelper
    unless !['Pending'].include?specimen['status']
     @specimens << { 'priority' => priority[rand(3)], 'orderer' => specimen['doctor'],
                     'status' => specimen['status'], 'test' => specimen['test_name'],
-                    "action" => ["viability", (((10 - ((Time.now - specimen["date_collected"].to_time)/1.hour))/10)*100)],
+                    "action" => calculate_viability(specimen["date_collected"], 10),
                     'name' => specimen['patient_name']}
    end
   end
-  return @specimens.sort_by { |hsh| [priority.index(hsh['priority']),hsh['test']] }
+  return @specimens.sort_by { |hsh| [hsh["action"][1],priority.index(hsh['priority']),hsh['test']] }
  end
 
  def nurse_dashboard(list)
@@ -48,6 +48,7 @@ module HomeHelper
  end
 
  def calculate_viability(time_spent, life_span)
-  ["viability",(((life_span - ((Time.now - time_spent.to_time)/1.hour))/life_span)*100)]
+  viability = (((life_span - ((Time.now - time_spent.to_time)/1.hour))/life_span)*100)
+  return ["viability",(viability < 0 ? 0 : (viability > 100 ? 100 : viability))]
  end
 end
