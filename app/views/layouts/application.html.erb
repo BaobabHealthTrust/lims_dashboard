@@ -19,8 +19,9 @@
       #progressbar > div {
           background-color: #119922;
           width: 95%; /* Adjust with JavaScript */
-          height: 2vh;
+          height: 15px;
           border-radius: 10px;
+          margin: 1px;
       }
       .even{
           background-color: gainsboro;
@@ -33,7 +34,7 @@
           setInterval(GetClock,1000);
           document.getElementById('main').style.height = (window.innerHeight -
                   (document.getElementById('header').offsetHeight +
-                          document.getElementById("footer").offsetHeight + 10)) + "px";
+                          document.getElementById("footer").offsetHeight + 11)) + "px";
 
       }
 
@@ -41,7 +42,7 @@
       function resized(){
           document.getElementById('main').style.height = (window.innerHeight -
                   (document.getElementById('header').offsetHeight +
-                          document.getElementById("footer").offsetHeight + 10)) + "px";
+                          document.getElementById("footer").offsetHeight + 11)) + "px";
       }
       function setLength(id, value)
       {
@@ -55,7 +56,7 @@
   <span id="location"><%= params[:location].titleize rescue "" %></span>
   <span id="clockbox"></span>
 </div>
-<div id="main" style="position:relative;border: 1px solid black;margin-top:60px;overflow: hidden;">
+<div id="main" style="position:relative;margin-top:60px;overflow: hidden;">
 <%= yield %>
 </div>
 
