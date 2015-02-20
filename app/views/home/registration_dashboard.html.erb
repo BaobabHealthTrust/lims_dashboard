@@ -1,4 +1,7 @@
+
 <script>
+
+
   function updateRecords() {
       link = "/home/ajax_lab_reception_list?location=" + '<%= params[:location].titleize rescue "unknown" %>';
       getData(link);
@@ -6,11 +9,27 @@
   function handleResults(data){
     if (data.length > -1)
     {
-        reloadTable('dataSection',data,[['name', 25],['test', 40],['priority', 6.5], ['action', '']], "tableContainer")
+        reloadTable('dataSection',data,[['name', 25],['department', 40],['priority', 6.5], ['action', '']], "tableContainer")
     }
   }
+  function updateStats(){
+      link = "/home/ajax_lab_reception_stats";
+      getStats(link);
+
+  }
+
+  function displayResults(statistics)
+  {
+          document.getElementById('ordered').innerHTML =  statistics["Drawn"];
+          document.getElementById('received').innerHTML =  statistics["Received At Reception"]
+          document.getElementById('tested').innerHTML =  statistics["Tested"]
+          document.getElementById('pending').innerHTML =  statistics["Received In Department"]
+          document.getElementById('turn-around').innerHTML =  statistics["avg_tat_in_min"] + " mins"
+  }
+
   setTimeout("updateRecords()", 1000)
-  setInterval("updateRecords()", 6000)
+  setInterval("updateStats()", 6000)
+
 </script>
 
 <div class="container" style="height: 99%;">
@@ -44,7 +63,7 @@
               Patient
             </div>
             <div class="table-header-cell" style="width: 40%">
-              Test
+              Test Department(s)
             </div>
             <div class="table-header-cell" style="width: 5%">
               Priority

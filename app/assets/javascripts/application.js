@@ -85,7 +85,6 @@ function getData(link)
             }else if(results.length > 0){
                 handleResults(JSON.parse(results))
             }else{
-                //document.getElementById('reporter').innerHTML = "....";
                 return ;
             }
         }
@@ -100,5 +99,34 @@ function drawProgressBar(width)
 
     return "<div id='progressbar'>" + '<div style="width:'+width+'%; background-color:'+
         (width > 70 ? '#119922' : (width > 40 ? '#FFFF00' : '#CC0000')) +'"></div>' + "</div>"
+
+}
+function getStats(path)
+{
+    if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp=new XMLHttpRequest();
+    }else{// code for IE6, IE5
+        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.onreadystatechange=function() {
+        if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+            var statistics = xmlhttp.responseText;
+            if(statistics == 'undefined' || statistics == '' || statistics == 'null' || statistics == '"not validate"') {
+                return ;
+            }else if(statistics.length > 0){
+                stats = JSON.parse(statistics)
+                document.getElementById('ordered').innerHTML =  stats["Drawn"];
+                document.getElementById('received').innerHTML =  stats["Received At Reception"]
+                document.getElementById('tested').innerHTML =  stats["Tested"]
+                document.getElementById('pending').innerHTML =  stats["Received In Department"]
+                document.getElementById('turn-around').innerHTML =  stats["avg_tat_in_min"] + " mins"
+                updateRecords();
+            }else{
+                return ;
+            }
+        }
+    }
+    xmlhttp.open("GET",path ,true);
+    xmlhttp.send();
 
 }
