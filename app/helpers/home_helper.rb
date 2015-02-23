@@ -37,7 +37,7 @@ module HomeHelper
   action = {"Rejected" => "<span style='color:red;'>Draw sample</span>", "Received At Reception" => ["viability"],
             "Rejected" => "<span style='color:red;'>Redraw</span>", "Lost" => "<span style='color:red;'>Redraw</span>",
             "Tested" => "<span>Print</span>", "Received In Department" => ["viability"],
-            "Drawn" => ["viability"],"Verification Pending" => "<span>View</span>", "Verified" => "<span>Print</span>"}
+            "Drawn" => ["viability"],"Verification Pending" => "<span>View</span>", "Verified" => "<span style='color:red;'>Print</span>"}
 
   (list || []).each do |test|
    act = action[test['status']]
