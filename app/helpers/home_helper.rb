@@ -5,7 +5,7 @@ module HomeHelper
   (list || []).each do |specimen|
 
     @specimens << { 'priority' => 'STAT', 'test' => specimen["test_type_name"],
-                    "action" => calculate_viability(specimen["time_drawn"], 10),"location"=> "Unk",
+                    "action" => calculate_viability(specimen["time_drawn"], 10),"location"=> specimen["location"],
                     'name' => specimen['patient_name'],"accession_number" => specimen['accession_number']}
 
   end
@@ -37,7 +37,7 @@ module HomeHelper
   action = {"Rejected" => "<span style='color:red;'>Draw sample</span>", "Received At Reception" => ["viability"],
             "Rejected" => "<span style='color:red;'>Redraw</span>", "Lost" => "<span style='color:red;'>Redraw</span>",
             "Tested" => "<span>Print</span>", "Received In Department" => ["viability"],
-            "Drawn" => ["viability"],"Verification Pending" => "<span>Print</span>"}
+            "Drawn" => ["viability"],"Verification Pending" => "<span>View</span>", "Verified" => "<span>Print</span>"}
 
   (list || []).each do |test|
    act = action[test['status']]
