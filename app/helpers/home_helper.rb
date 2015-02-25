@@ -1,7 +1,7 @@
 module HomeHelper
 
  def lab_dashboard(list)
-
+  priority = ["ST", "RT", "OR"]
   (list || []).each do |specimen|
    test_priority = specimen['priority'].split(',')
    display_priority = (((test_priority.include?'S') ? 'STAT' : ((test_priority.include?'R') ? 'RT' : 'OR'))).upcase
@@ -11,12 +11,12 @@ module HomeHelper
 
   end
 
-  return @specimens.sort_by { |hsh| [hsh["action"][1],hsh['test']] }
+  return @specimens.sort_by { |hsh| [hsh["action"][1],priority.index(hsh['priority']),hsh['test']] }
  end
 
  def lab_registration(specimens)
 
-  priority = ["ST", "RT", "OP"]
+  priority = ["ST", "RT", "OR"]
 
 
   (specimens || []).each do |specimen|
@@ -34,12 +34,15 @@ module HomeHelper
  end
 
  def nurse_dashboard(list)
-  priority = ["ST", "RT", "OP"]
-  action = {"Rejected" => "<span style='color:red;'>Draw sample</span>", "Received At Reception" => ["viability"],
+  priority = ["STAT", "RT", "OR"]
+  action = {"Ordered" => "<span style='color:red;'>Draw sample</span>", "Received At Reception" => ["viability"],
             "Rejected" => "<span style='color:red;'>Redraw</span>", "Lost" => "<span style='color:red;'>Redraw</span>",
             "Tested" => "<span>Print</span>", "Received In Department" => ["viability"],
-            "Drawn" => ["viability"],"Verification Pending" => "<span>View</span>", "Verified" => "<span style='color:red;'>Print</span>"}
+            "Drawn" => ["viability"],"Verification Pending" => "<span>View</span>",
+            "Verified" => "<span style='color:red;'>Print</span>"}
 
+  actions = ["Verified","Tested","Verification Pending","Drawn","Received In Department","Received At Reception",
+             "Ordered","Lost","Rejected"]
   (list || []).each do |test|
    act = action[test['status']]
    life_span = test["lifespan"].split(',').collect{|x| x.to_i}.sort
@@ -51,7 +54,7 @@ module HomeHelper
 
   end
 
-  return @specimens.sort_by {|hash| priority.index(hash['priority']) }
+  return @specimens.sort_by {|hash| [actions.index(hash['action']),priority.index(hash['priority']),hash['test']] }
  end
 
  def calculate_viability(time_spent, life_span)
