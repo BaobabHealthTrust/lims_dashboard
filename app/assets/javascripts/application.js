@@ -38,6 +38,7 @@ function reloadTable(section, data, keys, container)
             html =  "<div style='display: table-row' class='"+ ((i % 2 == 0) ? 'odd' : 'even') +"'>"
             for(w = 0; w < keys.length ; w++)
             {
+                console.log(keys[w]);
                 if (['action'].indexOf(keys[w][0]) != -1)
                 {
                     if (Array.isArray(data[i][keys[w][0]]))
@@ -46,13 +47,13 @@ function reloadTable(section, data, keys, container)
                             drawProgressBar(data[i][keys[w][0]][1]) +"</div>"
                     }
                     else{
-                        html = html + "<div class='base-cell' style=" +(isNaN(parseFloat(keys[w][1])) ? '' : 'width:'+keys[w][1] +'%')+">"+
+                        html = html + "<div class='base-cell' style=" +(isNaN(parseFloat(keys[w][1])) ? '' : 'width:'+keys[w][1] +'%;text-align:'+keys[w][2])+">"+
                             data[i][keys[w][0]] +"</div>"
                     }
                 }
                 else
                 {
-                    html = html + "<div class='base-cell' style=" +(isNaN(parseFloat(keys[w][1])) ? '' : 'width:'+keys[w][1] +'%')+">"+
+                    html = html + "<div class='base-cell' style=" +(isNaN(parseFloat(keys[w][1])) ? '' : 'width:'+keys[w][1] +'%;text-align:'+keys[w][2])+">"+
                         data[i][keys[w][0]] +"</div>"
                 }
             }

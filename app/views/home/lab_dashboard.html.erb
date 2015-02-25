@@ -6,7 +6,7 @@
     function handleResults(data){
         if (data.length > -1)
         {
-            reloadTable('dataSection',data,[['name', 20],['accession_number', 15],['test', 40],['priority', 6],['location', 5], ['action', '']], "main_container")
+            reloadTable('dataSection',data,[['name', 20, 'left'],['accession_number', 15,'left'],['test', 35, 'left'],['priority', 8, 'center'],['location', 7,'center'], ['action', '', 'left']], "main_container")
         }
     }
     setTimeout("updateRecords()", 1000)
@@ -24,13 +24,13 @@
           <div class="table-header-cell" style="width: 15%">
             Accession No.
           </div>
-          <div class="table-header-cell" style="width: 40%">
+          <div class="table-header-cell" style="width: 35%">
             Test
           </div>
-          <div class="table-header-cell" style="width: 5%">
+          <div class="table-header-cell" style="width: 8%">
             Priority
           </div>
-          <div class="table-header-cell" style="width: 5%">
+          <div class="table-header-cell" style="width: 7%">
             Loc
           </div>
           <div class="table-header-cell">
