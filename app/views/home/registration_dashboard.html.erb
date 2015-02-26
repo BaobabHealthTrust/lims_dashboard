@@ -23,8 +23,9 @@
           document.getElementById('ordered').innerHTML =  statistics["Drawn"];
           document.getElementById('received').innerHTML =  statistics["Received At Reception"]
           document.getElementById('tested').innerHTML =  statistics["Tested"]
+          document.getElementById('verification').innerHTML =  statistics["Tested"]
           document.getElementById('pending').innerHTML =  statistics["Received In Department"]
-          document.getElementById('turn-around').innerHTML =  statistics["avg_tat_in_min"] + " mins"
+         // document.getElementById('turn-around').innerHTML =  statistics["avg_tat_in_min"] + " mins"
   }
 
   setTimeout("updateRecords()", 1000)
@@ -51,10 +52,11 @@
         <b>Pending</b> <br>
         <span class="indicator" id="pending"><%= @pending %></span>
       </div>
+      <!--
       <div class="value-container">
         <b>TA Time</b><br>
-        <span class="indicator" id="turn-around"><%= @turn_around %></span>
-      </div>
+        <span class="indicator" id="turn-around"><%#= @turn_around %></span>
+      </div>!-->
     </div>
     <div class="col" id="tableContainer">
         <div style="display: table;width: 99%;margin-left: auto;margin-right: auto;">
@@ -82,4 +84,7 @@
     </div>
   </div>
 </div>
-<div id="summary" class="summary"><b>Showing 0 / 0</b></div>
+<div id="summary" class="summary">
+  <div style="margin-left: 25%;float: left;">Showing <b><span id="displayNum">0</span> / <span id="displayTotal">0</span></b></div>
+  <div style="margin-right: 5%;float: right; font-family: 'Comic Sans MS', cursive, sans-serif">Results Pending Verification: <span style="font-weight:bold " id="verification"><%= @tested %></span> </div>
+</div>

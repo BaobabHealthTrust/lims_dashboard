@@ -54,7 +54,7 @@ module HomeHelper
 
   end
 
-  return @specimens.sort_by {|hash| [actions.index(hash['status']),priority.index(hash['priority']), (hash['action'].is_a?(Array) ? hash['action'] : 0)] }
+  return @specimens.sort_by {|hash| [actions.index(hash['status']),(hash['action'].is_a?(Array) ? hash['action'] : 0),priority.index(hash['priority']) ] }
  end
 
  def calculate_viability(time_spent, life_span)

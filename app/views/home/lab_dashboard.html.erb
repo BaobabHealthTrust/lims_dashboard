@@ -9,8 +9,20 @@
             reloadTable('dataSection',data,[['name', 20, 'left'],['accession_number', 15,'left'],['test', 35, 'left'],['priority', 8, 'center'],['location', 7,'center'], ['action', '', 'left']], "main_container")
         }
     }
+    function updateStats(){
+        link = "/home/ajax_lab_reception_stats";
+        getStats(link);
+
+    }
+
+    function displayResults(statistics)
+    {
+        document.getElementById('verification').innerHTML =  statistics["Tested"]
+    }
+
     setTimeout("updateRecords()", 1000)
-    setInterval("updateRecords()", 6000)
+    setInterval("updateStats()", 6000)
+
 </script>
 
 <div class="container" style="height: 97%;" >
@@ -31,7 +43,7 @@
             Priority
           </div>
           <div class="table-header-cell" style="width: 7%; text-align: center;">
-            Loc
+            Location
           </div>
           <div class="table-header-cell">
             Viability
@@ -48,4 +60,7 @@
     </div>
   </div>
 </div>
-<div id="summary" class="summary"><b>Showing 0/0</b></div>
+<div id="summary" class="summary">
+  <div style="margin-left: 25%;float: left;">Showing <b><span id="displayNum">0</span> / <span id="displayTotal">0</span></b></div>
+  <div style="margin-right: 5%;float: right; font-family: 'Comic Sans MS', cursive, sans-serif">Results Pending Verification: <span style="font-weight:bold " id="verification">0</span> </div>
+</div>

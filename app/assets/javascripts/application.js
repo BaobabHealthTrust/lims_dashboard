@@ -38,7 +38,7 @@ function reloadTable(section, data, keys, container)
             html =  "<div style='display: table-row' class='"+ ((i % 2 == 0) ? 'odd' : 'even') +"'>"
             for(w = 0; w < keys.length ; w++)
             {
-                console.log(keys[w]);
+
                 if (['action'].indexOf(keys[w][0]) != -1)
                 {
                     if (Array.isArray(data[i][keys[w][0]]))
@@ -67,8 +67,8 @@ function reloadTable(section, data, keys, container)
         count += 1
     }
 
-    document.getElementById('summary').innerHTML = "<b>Showing</b> " + count + " / " + data.length
-
+    document.getElementById('displayNum').innerHTML =  count
+    document.getElementById('displayTotal').innerHTML = data.length
 }
 
 function getData(link)
@@ -115,12 +115,8 @@ function getStats(path)
             if(statistics == 'undefined' || statistics == '' || statistics == 'null' || statistics == '"not validate"') {
                 return ;
             }else if(statistics.length > 0){
-                stats = JSON.parse(statistics)
-                document.getElementById('ordered').innerHTML =  stats["Drawn"];
-                document.getElementById('received').innerHTML =  stats["Received At Reception"]
-                document.getElementById('tested').innerHTML =  stats["Tested"]
-                document.getElementById('pending').innerHTML =  stats["Received In Department"]
-                document.getElementById('turn-around').innerHTML =  stats["avg_tat_in_min"] + " mins"
+                stats = JSON.parse(statistics);
+                displayResults(stats);
                 updateRecords();
             }else{
                 return ;
