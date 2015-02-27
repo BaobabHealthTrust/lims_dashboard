@@ -34,6 +34,7 @@ module HomeHelper
  end
 
  def nurse_dashboard(list)
+
   priority = ["STAT", "ROUT", "OR"]
   action = {"Ordered" => "<span style='color:red;'>Draw sample</span>", "Received At Reception" => ["viability"],
             "Rejected" => "<span style='color:red;'>Redraw</span>", "Lost" => "<span style='color:red;'>Redraw</span>",
@@ -44,21 +45,24 @@ module HomeHelper
   actions = ["Verified","Tested","Verification Pending","Drawn","Received In Department","Received At Reception",
              "Ordered","Lost","Rejected"]
   (list || []).each do |test|
-   act = action[test['status']]
+   act = action[test['status'].split(',').uniq[0]]
    life_span = test["lifespan"].split(',').collect{|x| x.to_i}.sort
    test_priority = test['priority'].split(',')
+
    display_priority = (((test_priority.include?'S') ? 'STAT' : ((test_priority.include?'R') ? 'ROUT' : 'OR'))).upcase
+	 display_status = test['status'].split(',').uniq[0]
+
     @specimens << { 'priority' => display_priority,'orderer' => test['ordered_by'],
-                    'status' => test['status'], 'department' => test['department'],
+                    'status' => display_status, 'department' => test['department'],
                     "action" => (act.is_a?(Array) ? calculate_viability(test["time_drawn"], life_span[0]) : act), 'name' => test['patient_name'].gsub("N/A ", "")}
 
   end
 
-  return @specimens.sort_by {|hash| [actions.index(hash['status']),(hash['action'].is_a?(Array) ? hash['action'] : 0),priority.index(hash['priority']) ] }
+  return @specimens.sort_by {|hash| [actions.index(hash['status']),(hash['action'].is_a?(Array) ? hash['action'][1] : 0),priority.index(hash['priority']) ] }
  end
 
  def calculate_viability(time_spent, life_span)
-  viability = (((life_span - ((Time.now - time_spent.to_time)/1.hour))/life_span)*100)
-  return ["viability",(viability < 0 ? 0 : (viability > 100 ? 100 : viability))] rescue ["viability", 0]
+  viability = (((life_span - ((Time.now - time_spent.to_time)/1.hour))/life_span)*100) rescue 0
+  return ["viability",(viability < 0 ? 0 : (viability > 100 ? 100 : viability))] 
  end
 end
