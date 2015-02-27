@@ -7,7 +7,7 @@ module HomeHelper
    display_priority = (((test_priority.include?'S') ? 'STAT' : ((test_priority.include?'R') ? 'ROUT' : 'OR'))).upcase
     @specimens << { 'priority' => 'STAT', 'test' => specimen["test_type_name"],
                     "action" => calculate_viability(specimen["time_drawn"], 10),"location"=> specimen["location"][0..2].upcase,
-                    'name' => specimen['patient_name'],"accession_number" => specimen['accession_number']}
+                    'name' => specimen['patient_name'].gsub("N/A ", ""),"accession_number" => specimen['accession_number']}
 
   end
 
@@ -27,7 +27,7 @@ module HomeHelper
     @specimens << { 'priority' => display_priority, 'orderer' => specimen['ordered_by'],
                     'status' => specimen['status'], 'department' => specimen['department'],
                     "action" => calculate_viability(specimen["time_drawn"], life_span[0]),
-                    'name' => specimen['patient_name']}
+                    'name' => specimen['patient_name'].gsub("N/A ", "")}
 
   end
   return @specimens.sort_by { |hsh| [hsh["action"][1],priority.index(hsh['priority']),hsh['test']] }
@@ -50,7 +50,7 @@ module HomeHelper
    display_priority = (((test_priority.include?'S') ? 'STAT' : ((test_priority.include?'R') ? 'ROUT' : 'OR'))).upcase
     @specimens << { 'priority' => display_priority,'orderer' => test['ordered_by'],
                     'status' => test['status'], 'department' => test['department'],
-                    "action" => (act.is_a?(Array) ? calculate_viability(test["time_drawn"], life_span[0]) : act), 'name' => test['patient_name']}
+                    "action" => (act.is_a?(Array) ? calculate_viability(test["time_drawn"], life_span[0]) : act), 'name' => test['patient_name'].gsub("N/A ", "")}
 
   end
 
@@ -59,6 +59,6 @@ module HomeHelper
 
  def calculate_viability(time_spent, life_span)
   viability = (((life_span - ((Time.now - time_spent.to_time)/1.hour))/life_span)*100)
-  return ["viability",(viability < 0 ? 0 : (viability > 100 ? 100 : viability))]
+  return ["viability",(viability < 0 ? 0 : (viability > 100 ? 100 : viability))] rescue ["viability", 0]
  end
 end
