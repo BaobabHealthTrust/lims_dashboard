@@ -2,16 +2,22 @@ module HomeHelper
 
  def lab_dashboard(list)
   priority = ["STAT", "ROUT", "OR"]
+  state = {"Testing" => 0,"Received In Department"=> 1,"Received At Reception" => 1}
   (list || []).each do |specimen|
+   testing = specimen["status"].split(',').uniq.include?'Testing'
+   act = get_action(specimen['status'].split(',').uniq[0])
    test_priority = specimen['priority'].split(',')
+   life_span = specimen["lifespan"].split(',').collect{|x| x.to_i}.sort
    display_priority = (((test_priority.include?'S') ? 'STAT' : ((test_priority.include?'R') ? 'ROUT' : 'OR'))).upcase
-    @specimens << { 'priority' => 'STAT', 'test' => specimen["test_type_name"],
-                    "action" => calculate_viability(specimen["time_drawn"], 10),"location"=> specimen["location"][0..2].upcase,
-                    'name' => specimen['patient_name'].gsub("N/A ", ""),"accession_number" => specimen['accession_number']}
+    @specimens << { 'priority' => display_priority, 'test' => specimen["test_type_name"],
+                    "action" => (testing ? act : calculate_viability(specimen["time_drawn"], life_span[0])),
+                    "location"=> specimen["location"][0..2].upcase,"accession_number" => specimen['accession_number'],
+                    "state"=> specimen['status'].split(',').uniq[0],
+                    'name' => specimen['patient_name'].gsub("N/A ", "")}
 
   end
 
-  return @specimens.sort_by { |hsh| [hsh["action"][1],priority.index(hsh['priority']),hsh['test']] }
+  return @specimens.sort_by { |hsh| [state[hsh["state"]],(hsh['action'].is_a?(Array) ? hsh['action'][1] : 0),priority.index(hsh['priority']),hsh['test']] }
  end
 
  def lab_registration(specimens)
@@ -36,16 +42,11 @@ module HomeHelper
  def nurse_dashboard(list)
 
   priority = ["STAT", "ROUT", "OR"]
-  action = {"Ordered" => "<span style='color:red;'>Draw sample</span>", "Received At Reception" => ["viability"],
-            "Rejected" => "<span style='color:red;'>Redraw</span>", "Lost" => "<span style='color:red;'>Redraw</span>",
-            "Tested" => "<span>Print</span>", "Received In Department" => ["viability"],
-            "Drawn" => ["viability"],"Verification Pending" => "<span>View</span>",
-            "Verified" => "<span style='color:red;'>Print</span>"}
 
   actions = ["Verified","Tested","Verification Pending","Drawn","Received In Department","Received At Reception",
              "Ordered","Lost","Rejected"]
   (list || []).each do |test|
-   act = action[test['status'].split(',').uniq[0]]
+   act = get_action(test['status'].split(',').uniq[0])
    life_span = test["lifespan"].split(',').collect{|x| x.to_i}.sort
    test_priority = test['priority'].split(',')
 
@@ -64,5 +65,16 @@ module HomeHelper
  def calculate_viability(time_spent, life_span)
   viability = (((life_span - ((Time.now - time_spent.to_time)/1.hour))/life_span)*100) rescue 0
   return ["viability",(viability < 0 ? 0 : (viability > 100 ? 100 : viability))] 
+ end
+
+ def get_action(state)
+  action = {"Ordered" => "<span style='color:red;'>Draw sample</span>",
+            "Received At Reception" => ["viability"],"Testing" => "<span>In Progress</span>",
+            "Rejected" => "<span style='color:red;'>Redraw</span>",
+            "Lost" => "<span style='color:red;'>Redraw</span>",
+            "Tested" => "<span>Print</span>", "Received In Department" => ["viability"],
+            "Drawn" => ["viability"],"Verification Pending" => "<span>View</span>",
+            "Verified" => "<span style='color:red;'>Print</span>"}
+ return action[state]
  end
 end
