@@ -34,7 +34,7 @@ class HomeController < ApplicationController
 
  def ajax_nurse_dashboard_list
   @specimens = []
-  list = Specimen.new().get_specimens('ward',"'Ordered','Drawn','Rejected','Verified','Tested'")
+  list = Specimen.new().get_specimens('ward',"'Ordered','Drawn','Rejected','Verified','Tested'", params[:location])
   render :text => view_context.nurse_dashboard(list).to_json
  end
 
