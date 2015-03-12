@@ -1,4 +1,4 @@
-class Result < ActiveRecord::Base
+class Result 
 
  def new_results()
 

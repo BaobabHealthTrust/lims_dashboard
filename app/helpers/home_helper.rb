@@ -54,7 +54,7 @@ module HomeHelper
 	 display_status = test['status'].split(',').uniq[0]
 
     @specimens << { 'priority' => display_priority,'orderer' => test['ordered_by'],
-                    'status' => display_status, 'department' => test['department'],
+                    'status' => display_status, 'department' => test['department'].split(',').uniq,
                     "action" => (act.is_a?(Array) ? calculate_viability(test["time_drawn"], life_span[0]) : act), 'name' => test['patient_name'].gsub("N/A ", "")}
 
   end
