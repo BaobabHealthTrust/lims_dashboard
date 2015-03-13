@@ -112,7 +112,7 @@ div.footer{
 .base-cell{
     display: table-cell;
     border:2px solid #ffffff;
-    border-width:0px 1px 0px 0px;
+    border-width:0px 1px 1px 0px;
     font-size: 190%;
     text-align: left;
     padding: 5px;

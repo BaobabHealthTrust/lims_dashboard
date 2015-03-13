@@ -53,8 +53,17 @@ function reloadTable(section, data, keys, container)
                 }
                 else
                 {
-                    html = html + "<div class='base-cell' style=" +(isNaN(parseFloat(keys[w][1])) ? '' : 'width:'+keys[w][1] +'%;text-align:'+keys[w][2])+">"+
-                        data[i][keys[w][0]] +"</div>"
+                    if (keys[w][0] == 'priority')
+                    {
+                        html = html + "<div class='base-cell' style=" +(isNaN(parseFloat(keys[w][1])) ? '' : 'width:'+keys[w][1] +'%;' +
+                            'text-align:'+keys[w][2])+';background-color:'+(data[i]['class'] == 'urgent' ? '#FF0000' : '')+">"+
+                            data[i][keys[w][0]] +"</div>"
+
+                    }
+                    else {
+                        html = html + "<div class='base-cell' style=" +(isNaN(parseFloat(keys[w][1])) ? '' : 'width:'+keys[w][1] +'%;text-align:'+keys[w][2])+">"+
+                            data[i][keys[w][0]] +"</div>"
+                    }
                 }
             }
             html += "</div>"
@@ -99,7 +108,7 @@ function drawProgressBar(width)
 {
 
     return "<div id='progressbar'>" + '<div style="width:'+width+'%; background-color:'+
-        (width > 70 ? '#119922' : (width > 40 ? '#FFFF00' : '#CC0000')) +'"></div>' + "</div>"
+        (width > 70 ? '#119922' : (width > 30 ? '#FFFF00' : '#CC0000')) +'"></div>' + "</div>"
 
 }
 function getStats(path)
