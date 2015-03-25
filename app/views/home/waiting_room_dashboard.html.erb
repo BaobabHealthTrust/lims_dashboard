@@ -1,0 +1,49 @@
+<script type="text/javascript">
+    function updateRecords() {
+        link = "/home/ajax_waiting_room_dashboard";
+        getData(link);
+    }
+
+    function handleResults(data){
+        if (data.length > -1)
+        {
+            reloadTable('dataSection',data,[['patient', 30, 'left'],['total_tests', 15,'center'],['available_results', 15, 'center'],['recent_activity','', 'left']], "main_container")
+        }
+    }
+    setInterval('updateRecords()', 3000)
+</script>
+
+
+<div class="container" style="height: 97%;" >
+  <div class="table-row">
+    <div class="col" id="main_container">
+      <div style="display: table;width: 100%;">
+        <div style="display: table-header-group" id="heading">
+          <div class="table-header-cell" style="width: 30%;padding-left: 10px;">
+            Patient Name
+          </div>
+          <div class="table-header-cell" style="width: 15%;padding-left: 10px;">
+            Number of Tests
+          </div>
+          <div class="table-header-cell" style="width: 15%;padding-left: 10px;">
+            Results Available
+          </div>
+          <div class="table-header-cell" style="padding-left: 10px;">
+            Recent Activity
+          </div>
+
+        </div>
+      </div>
+     <div style="height:100%;overflow: hidden;">
+      <div style="display: table;width: 100%;">
+        <div id="dataSection" style="display: table;width: 100%;">
+        </div>
+
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+<div id="summary" class="summary">
+  <div style="text-align: center">Showing <b><span id="displayNum">0</span> / <span id="displayTotal">0</span></b></div>
+</div>
