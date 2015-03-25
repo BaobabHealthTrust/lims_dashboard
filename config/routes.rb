@@ -4,9 +4,11 @@ Rails.application.routes.draw do
   get 'home/lab_dashboard'
   get 'home/registration_dashboard'
   get 'home/nurse_dashboard'
+  get 'home/waiting_room_dashboard'
   get 'home/ajax_lab_reception_list'
   get 'home/ajax_lab_dashboard_list'
   get 'home/ajax_nurse_dashboard_list'
+  get 'home/ajax_waiting_room_dashboard'
   get 'home/ajax_lab_reception_stats'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
