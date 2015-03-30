@@ -56,7 +56,7 @@ module HomeHelper
    display_priority = (((test_priority.include?'S') ? 'STAT' : ((test_priority.include?'R') ? 'ROUT' : 'OR'))).upcase
 	  display_status = test['status'].split(',').uniq[0]
    viability = calculate_viability(test["time_drawn"], life_span[0])
-puts test['department']
+
    specimen_list << { 'priority' => display_priority,'orderer' => test['ordered_by'],
                     'status' => display_status, 'department' => test['department'].split(', ').uniq,
                     "action" => (act.is_a?(Array) ? viability : act),'class' => record_classification(viability[1],display_priority, display_status),
