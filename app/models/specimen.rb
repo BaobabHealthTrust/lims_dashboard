@@ -14,6 +14,7 @@ class Specimen
   params = {:date => Date.today, :dashboard_type => department}
   params[:status] = status if !status.blank?
   params[:ward] = location if !location.blank?
+
   data = JSON.parse(RestClient.post(url, params)) rescue (
   puts "**** Error when pulling data"
   )
