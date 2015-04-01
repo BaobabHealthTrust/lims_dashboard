@@ -51,4 +51,8 @@ class HomeController < ApplicationController
   status = Status.new().get_status
   render :text => status.to_json
  end
+
+ def time
+  render :text => Time.now().strftime('%Y-%m-%d %H:%M').to_s
+ end
 end
