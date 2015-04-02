@@ -128,3 +128,15 @@ span.indicator{
     line-height: 40px !important;
 
 }
+
+div.notifier-present{
+    color: #ffffff;
+    background-color:#006295;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+div.notifier{
+    color: #000000;
+
+}

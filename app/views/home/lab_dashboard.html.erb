@@ -18,6 +18,14 @@
     function displayResults(statistics)
     {
         document.getElementById('verification').innerHTML =  statistics["Tested"]
+        if (parseInt(statistics["Tested"]) > 0)
+        {
+            document.getElementById('verification_section').setAttribute("class", "notifier-present");
+        }
+        else
+        {
+            document.getElementById('verification_section').setAttribute("class", "notifier");
+        }
     }
 
     setTimeout("updateRecords()", 1000)
@@ -62,5 +70,5 @@
 </div>
 <div id="summary" class="summary">
   <div style="margin-left: 25%;float: left;">Showing <b><span id="displayNum">0</span> / <span id="displayTotal">0</span></b></div>
-  <div style="margin-right: 5%;float: right;">Results Pending Verification: <span style="font-weight:bold " id="verification">0</span> </div>
+  <div style="margin-right: 0.5%;float: right;" id="verification_section" >Results Pending Verification: <span style="font-weight:bold " id="verification">0</span> </div>
 </div>

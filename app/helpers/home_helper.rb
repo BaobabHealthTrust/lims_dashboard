@@ -34,7 +34,7 @@ module HomeHelper
    display_priority = (((test_priority.include?'S') ? 'STAT' : ((test_priority.include?'R') ? 'ROUT' : 'OR'))).upcase
    viability = calculate_viability(specimen["time_drawn"], life_span[0])
    specimen_list << { 'priority' => display_priority, 'orderer' => specimen['ordered_by'],
-                    'status' => specimen['status'], 'department' => specimen['department'],
+                    'status' => specimen['status'], 'department' => specimen['department'].split(', ').uniq,
                     "action" => viability,'name' => specimen['patient_name'].gsub("N/A ", ""),
                     'class' => record_classification(viability[1],display_priority, specimen['status'])}
 
@@ -92,6 +92,8 @@ module HomeHelper
             "Received At Reception" => ["viability"],"Testing" => "<span>In Progress</span>",
             "Rejected" => "<span style='color:red;'>Redraw</span>",
             "Sample Rejected" => "<span style='color:red;'>Redraw</span>",
+            "Test Rejected" => "<span style='color:red;'>Re-Order Test</span>",
+            "Result Rejected" => "<span style='color:red;'>Redraw</span>",
             "Lost" => "<span style='color:red;'>Redraw</span>",
             "Tested" => "<span>Print</span>", "Received In Department" => ["viability"],
             "Drawn" => ["viability"],"Verification Pending" => "<span>View</span>",
