@@ -56,8 +56,10 @@ module HomeHelper
    display_priority = (((test_priority.include?'S') ? 'STAT' : ((test_priority.include?'R') ? 'ROUT' : 'OR'))).upcase
 	  display_status = test['status'].split(',').uniq[0]
    viability = calculate_viability(test["time_drawn"], life_span[0])
+   orderer = test['ordered_by'].gsub!( "(1)", '')
+   orderer = (orderer.upcase.include?'DR') ? orderer : (orderer.split(" ")[0][0].upcase + ". " + orderer.split(" ")[1])
 
-   specimen_list << { 'priority' => display_priority,'orderer' => test['ordered_by'],
+   specimen_list << { 'priority' => display_priority,'orderer' => orderer,
                     'status' => display_status, 'department' => test['department'].split(', ').uniq,
                     "action" => (act.is_a?(Array) ? viability : act),'class' => record_classification(viability[1],display_priority, display_status),
                     'name' => test['patient_name'].gsub("N/A ", "")}
