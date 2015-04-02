@@ -47,7 +47,7 @@ module HomeHelper
   priority = ["STAT", "ROUT", "OR"]
   specimen_list = []
   actions = ["Verified","Tested","Verification Pending","Drawn","Received In Department","Received At Reception",
-             "Ordered","Lost","Rejected"]
+             "Ordered","Lost","Rejected", "Test Rejected"]
   (list || []).each do |test|
    act = get_action(test['status'].split(',').uniq[0])
    life_span = test["lifespan"].split(',').collect{|x| x.to_i}.sort
