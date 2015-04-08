@@ -1,6 +1,6 @@
 bliss_connection:
  ip_address: localhost
- port: port
- username: username
- password: passeord
+ port: 80
+ username: testlab1_admin
+ password: admin123
  folder: blis
