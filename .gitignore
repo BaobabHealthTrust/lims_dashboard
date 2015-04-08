@@ -19,4 +19,4 @@
 .idea/*
 *.lock
 *~
-set_time.sh
+*set_time.sh
