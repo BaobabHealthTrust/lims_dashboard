@@ -47,7 +47,7 @@ module HomeHelper
   priority = ["STAT", "ROUT", "OR"]
   specimen_list = []
   actions = ["Verified","Tested","Verification Pending","Drawn","Received In Department","Received At Reception",
-             "Ordered","Lost","Rejected"]
+             "Ordered","Lost","Test Rejected", "Sample Rejected", "Result Rejected"]
   (list || []).each do |test|
    act = get_action(test['status'].split(',').uniq[0])
    life_span = test["lifespan"].split(',').collect{|x| x.to_i}.sort
@@ -57,6 +57,7 @@ module HomeHelper
 	  display_status = test['status'].split(',').uniq[0]
    viability = calculate_viability(test["time_drawn"], life_span[0])
    orderer = test['ordered_by'].gsub!( "(1)", '')
+   orderer = "? ?" if orderer.blank?
    orderer = (orderer.upcase.include?'DR') ? orderer : (orderer.split(" ")[0][0].upcase + ". " + orderer.split(" ")[1])
 
    specimen_list << { 'priority' => display_priority,'orderer' => orderer,
@@ -92,7 +93,7 @@ module HomeHelper
  def get_action(state)
   action = {"Ordered" => "<span style='color:red;'>Draw sample</span>",
             "Received At Reception" => ["viability"],"Testing" => "<span>In Progress</span>",
-            "Rejected" => "<span style='color:red;'>Redraw</span>",
+            "Result Rejected" => "<span style='color:red;'>Redraw</span>",
             "Sample Rejected" => "<span style='color:red;'>Redraw</span>",
             "Test Rejected" => "<span style='color:red;'>Re-Order Test</span>",
             "Result Rejected" => "<span style='color:red;'>Redraw</span>",
