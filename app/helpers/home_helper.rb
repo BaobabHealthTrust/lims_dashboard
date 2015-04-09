@@ -56,7 +56,7 @@ module HomeHelper
    display_priority = (((test_priority.include?'S') ? 'STAT' : ((test_priority.include?'R') ? 'ROUT' : 'OR'))).upcase
 	  display_status = test['status'].split(',').uniq[0]
    viability = calculate_viability(test["time_drawn"], life_span[0])
-   orderer = test['ordered_by'].gsub!( "(1)", '')
+   orderer = test['ordered_by'].gsub!(/\(\d*\)/, '')
    orderer = "? ?" if orderer.blank?
    orderer = (orderer.upcase.include?'DR') ? orderer : (orderer.split(" ")[0][0].upcase + ". " + orderer.split(" ")[1])
 
