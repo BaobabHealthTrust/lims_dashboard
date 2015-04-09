@@ -4,11 +4,11 @@ class HomeController < ApplicationController
 
  def registration_dashboard
   status = Status.new().get_status
-
-  @ordered = (status['Drawn'].blank? ? '0' : status['Drawn'])
-  @received = (status['Received At Reception'].blank? ? 0 : status['Received At Reception'])
-  @tested = (status['Tested'].blank? ? 0 : status['Tested'])
-  @pending = (status['Received In Department'].blank? ? 0 : status['Received In Department'])
+  @ordered = status['Drawn']
+  @received = status['Received At Reception']
+  @testing = status['Testing']
+  @tested = status['Tested']
+  @pending = status['Received In Department']
   @turn_around = (status["avg_tat_in_min"].blank? ? 0 : status["avg_tat_in_min"]).to_s + " mins"
 
  end
