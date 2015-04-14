@@ -5,12 +5,17 @@ Rails.application.routes.draw do
   get 'home/registration_dashboard'
   get 'home/nurse_dashboard'
   get 'home/waiting_room_dashboard'
+  get '/lab_dashboard' => 'home#lab_dashboard'
+  get '/registration_dashboard' => 'home#registration_dashboard'
+  get '/nurse_dashboard' => 'home#nurse_dashboard'
+  get '/waiting_room_dashboard' => 'home#waiting_room_dashboard'
   get 'home/ajax_lab_reception_list'
   get 'home/ajax_lab_dashboard_list'
   get 'home/ajax_nurse_dashboard_list'
   get 'home/ajax_waiting_room_dashboard'
   get 'home/ajax_lab_reception_stats'
   get '/time' => 'home#time'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

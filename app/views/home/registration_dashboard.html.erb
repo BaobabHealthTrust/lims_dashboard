@@ -22,7 +22,7 @@
   {
           document.getElementById('ordered').innerHTML =  statistics["Drawn"];
           document.getElementById('received').innerHTML =  statistics["Received At Reception"]
-          document.getElementById('tested').innerHTML =  statistics["Tested"]
+          document.getElementById('inprogress').innerHTML =  statistics["Testing"]
           document.getElementById('verification').innerHTML =  statistics["Tested"]
           document.getElementById('pending').innerHTML =  statistics["Received In Department"]
          // document.getElementById('turn-around').innerHTML =  statistics["avg_tat_in_min"] + " mins"
@@ -43,7 +43,7 @@
 
 <div class="container" style="height: 99%;">
   <div class="table-row">
-    <div class="col" style="height:100%;width: 10%;">
+    <div class="col" style="height:100%;width: 14%;">
       <div class="value-container">
         <b>Ordered</b> <br>
         <span class="indicator" id="ordered"><%= @ordered %></span>
@@ -53,12 +53,12 @@
         <span class="indicator" id="received"><%= @received %></span>
       </div>
       <div class="value-container">
-       <b>Tested</b><br>
-        <span class="indicator" id="tested"><%= @tested %></span>
-      </div>
-      <div class="value-container">
         <b>Pending</b> <br>
         <span class="indicator" id="pending"><%= @pending %></span>
+      </div>
+      <div class="value-container">
+       <b>In Progress</b><br>
+        <span class="indicator" id="inprogress"><%= @testing %></span>
       </div>
       <!--
       <div class="value-container">
