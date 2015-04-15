@@ -48,7 +48,7 @@ class HomeController < ApplicationController
  end
 
  def ajax_lab_reception_stats
-  status = Status.new().get_status
+  status = Status.new().get_status(params[:type],params[:location])
   render :text => status.to_json
  end
 

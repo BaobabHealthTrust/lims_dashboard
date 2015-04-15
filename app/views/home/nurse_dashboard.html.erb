@@ -10,8 +10,22 @@
         }
     }
 
+    function updateStats(){
+        link = "/home/ajax_lab_reception_stats?type=ward&location="+ '<%= params[:location].titleize rescue "unknown" %>';
+        getStats(link);
+
+    }
+
+    function displayResults(statistics)
+    {
+        document.getElementById('ordered').innerHTML =  parseInt(statistics["Ordered"])
+        document.getElementById('drawn').innerHTML = parseInt(statistics["Drawn"])
+        document.getElementById('inProgress').innerHTML = parseInt(statistics["Testing"]) + parseInt(statistics["Tested"]) +  parseInt(statistics["Received At Reception"]) + parseInt(statistics["Received In Department"])
+        document.getElementById('availableResults').innerHTML = parseInt(statistics["Verified"])
+    }
+
     setTimeout("updateRecords()", 1000)
-    setInterval("updateRecords()", 6000)
+    setInterval("updateStats()", 20000)
 </script>
 
 <div class="container" style="">
@@ -26,7 +40,7 @@
             Ordered By
           </div>
           <div class="table-header-cell" style="width: 35%">
-            Test
+            Department
           </div>
           <div class="table-header-cell" style="width: 5%">
             Priority
@@ -51,6 +65,25 @@
     </div>
   </div>
 </div>
-<div class="summary" id="summary">
-  <div style="text-align: center;margin-left: auto;margin-right: auto;"><b>Showing <span id="displayNum">0</span> / <span id="displayTotal">0</span></b></div>
+<div id="summary" class="summary-footer">
+  <div style="display: table;width: 100%;">
+    <div style="display: table-row;">
+      <div style="display: table-cell;padding-right: 10px;padding-left: 10px;font-weight: bold;">
+        Tests Ordered : <span id="ordered">0</span>
+      </div>
+      <div style="display: table-cell;padding-right: 10px;padding-left: 10px;font-weight: bold;">
+        Samples Drawn : <span id="drawn">0</span>
+      </div>
+      <div style="display: table-cell;padding-right: 10px;padding-left: 10px;font-weight: bold;">
+        Tests Being Processed : <span id="inProgress">0</span>
+      </div>
+      <div style="display: table-cell;padding-right: 10px;padding-left: 10px;font-weight: bold;">
+        Results Available : <span id="availableResults">0</span>
+      </div>
+      <div style="display: table-cell;padding-right: 10px;padding-left: 10px;display: none;">
+        <b>Showing <span id="displayNum">0</span> / <span id="displayTotal">0</span></b>
+      </div>
+    </div>
+  </div>
+
 </div>

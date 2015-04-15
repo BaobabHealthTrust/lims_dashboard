@@ -76,8 +76,8 @@ function reloadTable(section, data, keys, container)
         count += 1
     }
 
-    document.getElementById('displayNum').innerHTML =  count
-    document.getElementById('displayTotal').innerHTML = data.length
+     document.getElementById('displayNum').innerHTML =  count
+     document.getElementById('displayTotal').innerHTML = data.length
 }
 
 function getData(link)

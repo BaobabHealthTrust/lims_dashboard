@@ -10,26 +10,28 @@
         }
     }
     function updateStats(){
-        link = "/home/ajax_lab_reception_stats";
+        link = "/home/ajax_lab_reception_stats?type=lab_department&location="+ '<%= params[:location].titleize rescue "unknown" %>';
         getStats(link);
 
     }
 
     function displayResults(statistics)
     {
+        document.getElementById('ordered').innerHTML = parseInt(statistics["Drawn"]) + parseInt(statistics["Ordered"]) + parseInt(statistics["Received At Reception"]) + parseInt(statistics["Received In Department"])
+        document.getElementById('inProgress').innerHTML = parseInt(statistics["Testing"])
         document.getElementById('verification').innerHTML =  statistics["Tested"]
-        if (parseInt(statistics["Tested"]) > 0)
+/*        if (parseInt(statistics["Tested"]) > 0)
         {
             document.getElementById('verification_section').setAttribute("class", "notifier-present");
         }
         else
         {
             document.getElementById('verification_section').setAttribute("class", "notifier");
-        }
+        }*/
     }
 
     setTimeout("updateRecords()", 1000)
-    setInterval("updateStats()", 6000)
+    setInterval("updateStats()", 20000)
 
 </script>
 
@@ -68,7 +70,21 @@
     </div>
   </div>
 </div>
-<div id="summary" class="summary">
-  <div style="margin-left: 25%;float: left;">Showing <b><span id="displayNum">0</span> / <span id="displayTotal">0</span></b></div>
-  <div style="margin-right: 0.5%;float: right;" id="verification_section" >Results Pending Verification: <span style="font-weight:bold " id="verification">0</span> </div>
+<div id="summary" class="summary-footer">
+  <div style="display: table;width: 100%;">
+    <div style="display: table-row;">
+      <div style="display: table-cell;padding-right: 10px;padding-left: 10px;font-weight: bold;">
+        Tests Ordered : <span id="ordered">0</span>
+      </div>
+      <div style="display: table-cell;padding-right: 10px;padding-left: 10px;font-weight: bold;">
+        Tests Being Processed : <span id="inProgress">0</span>
+      </div>
+      <div style="display: table-cell;padding-right: 10px;padding-left: 10px;display: none;">
+        <b>Showing <span id="displayNum">0</span> / <span id="displayTotal">0</span></b>
+      </div>
+      <div style="display: table-cell;padding-right: 10px;padding-left: 10px;font-weight: bold;" id="verification_section" >
+        Results Pending Verification : <span style="font-weight:bold " id="verification">0</span>
+      </div>
+    </div>
+  </div>
 </div>
