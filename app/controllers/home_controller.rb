@@ -3,7 +3,7 @@ class HomeController < ApplicationController
  end
 
  def registration_dashboard
-  status = Status.new().get_status
+  status = Status.new().get_status('lab_reception',params[:location])
   @ordered = status['Drawn']
   @received = status['Received At Reception']
   @testing = status['Testing']
