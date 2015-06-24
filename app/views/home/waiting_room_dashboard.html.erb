@@ -10,7 +10,8 @@
             reloadTable('dataSection',data,[['patient', 30, 'left'],['total_tests', 15,'center'],['available_results', 15, 'center'],['recent_activity','', 'left']], "main_container")
         }
     }
-    setInterval('updateRecords()', 3000)
+    updateRecords();
+    setInterval('updateRecords()', 2*60*1000)
 </script>
 
 <style>

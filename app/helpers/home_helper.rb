@@ -73,8 +73,9 @@ module HomeHelper
 
  def waiting_room(list)
 
-  indexes = {"Pending" => 3, "Test in Progress" => 2,"Result pending" => 1, "Result Available" => 0}
-  text = {'Received In Department' => "Pending", 'Testing' => "Test in Progress", 'Tested' => "Result pending", 'Verified' => "Result Available"}
+  indexes = {"Pending" => 4, "Test in Progress" => 3,"Result pending" => 2,  "Rejected" => 1, "Result Available" => 0}
+  text = {'Received In Department' => "Pending", 'Testing' => "Test in Progress", 'Tested' => "Result pending", 'Verified' => "Result Available",
+          'Sample Rejected' => "Rejected", 'Test Rejected' => "Rejected", 'Result Rejected' => "Rejected"}
   patients = []
   (list || []).each do |record|
    patients << {"patient" => record['patient_name'], "total_tests" => record['all_tests'],
