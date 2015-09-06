@@ -1,7 +1,8 @@
 
 
 function GetClock(){
-    var d=new Date();
+    var d = date;
+    date.setSeconds(date.getSeconds() + 1);
     var nday=d.getDay(),nmonth=d.getMonth(),ndate=d.getDate(),nyear=d.getYear(),nhour=d.getHours(),nmin=d.getMinutes(),nsec=d.getSeconds(),ap;
     var month=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     if(nhour==0){ap=" AM";nhour=12;}

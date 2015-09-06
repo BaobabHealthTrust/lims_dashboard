@@ -5,6 +5,7 @@
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+
   <style>
       #progressbar {
           margin-right: auto;
@@ -31,6 +32,8 @@
       }
   </style>
   <script type="text/javascript">
+
+      date = new Date(parseInt("<%= Time.now.to_f * 1000 %>"));
 
       window.onload=function(){
           GetClock();
