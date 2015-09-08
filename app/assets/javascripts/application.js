@@ -12,9 +12,9 @@ function GetClock(){
 
     if(nyear<1000) nyear+=1900;
     if(nmin<=9) nmin="0"+nmin;
-    if(nsec<=9) nsec="0"+nsec;
+    //if(nsec<=9) nsec="0"+nsec;
 
-    document.getElementById('clockbox').innerHTML=""+ndate+" "+month[nmonth]+" "+nyear+" "+nhour+":"+nmin+":"+nsec+ap+"";
+    document.getElementById('clockbox').innerHTML=""+ndate+" "+month[nmonth]+" "+nyear+" "+nhour+":"+nmin+":"+ap+"";
 }
 
 function reloadTable(section, data, keys, container)
