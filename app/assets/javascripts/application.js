@@ -14,7 +14,7 @@ function GetClock(){
     if(nmin<=9) nmin="0"+nmin;
     //if(nsec<=9) nsec="0"+nsec;
 
-    document.getElementById('clockbox').innerHTML=""+ndate+" "+month[nmonth]+" "+nyear+" "+nhour+":"+nmin+":"+ap+"";
+    document.getElementById('clockbox').innerHTML=""+ndate+" "+month[nmonth]+" "+nyear+" "+nhour+":"+nmin+" "+ap+"";
 }
 
 function reloadTable(section, data, keys, container)
