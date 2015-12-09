@@ -6,7 +6,18 @@
     function handleResults(data){
         if (data.length > -1)
         {
-            reloadTable('dataSection',data,[['name', 20, 'left'],['accession_number', 15,'left'],['test', 35, 'left'],['priority', 8, 'center'],['location', 7,'center'], ['action', '', 'left']], "main_container")
+            var fields = [];
+            <% if params[:hide_patient_names].blank?%>
+            fields.push(['name', 23, 'left']);
+            <% else %>
+            fields.push(['name_stub', 23, 'left']);
+            <% end %>
+            fields.push(['accession_number', 18,'left']);
+            fields.push(['test', 24, 'left']);
+            fields.push( ['location', 14,'center']);
+            fields.push(['status', '', 'center']);
+
+            reloadTable('dataSection',data,fields, "main_container");
         }
     }
     function updateStats(){
@@ -17,9 +28,9 @@
 
     function displayResults(statistics)
     {
-        document.getElementById('ordered').innerHTML = parseInt(statistics["Drawn"]) + parseInt(statistics["Ordered"]) + parseInt(statistics["Received At Reception"]) + parseInt(statistics["Received In Department"])
-        document.getElementById('inProgress').innerHTML = parseInt(statistics["Testing"])
-        document.getElementById('verification').innerHTML =  statistics["Tested"]
+        document.getElementById('ordered').innerHTML = parseInt(statistics["not-received"]) + parseInt(statistics["pending"])
+        document.getElementById('inProgress').innerHTML = parseInt(statistics["started"])
+        document.getElementById('verification').innerHTML =  statistics["completed"]
 /*        if (parseInt(statistics["Tested"]) > 0)
         {
             document.getElementById('verification_section').setAttribute("class", "notifier-present");
@@ -30,8 +41,9 @@
         }*/
     }
 
-    setTimeout("updateRecords()", 2000)
-    setInterval("updateStats()", 60000)
+    setTimeout("updateStats()", 5)
+
+    setInterval("updateStats()", 5000)
 
 </script>
 
@@ -40,23 +52,23 @@
     <div class="col" id="main_container">
       <div style="display: table;width: 100%;">
         <div style="display: table-header-group" id="heading">
-          <div class="table-header-cell" style="width: 20%">
-            Patient
+
+          <div class="table-header-cell" style="width: 23%">
+            Patient Name
           </div>
-          <div class="table-header-cell" style="width: 15%">
+
+          <div class="table-header-cell" style="width: 18%;">
             Accession No.
           </div>
-          <div class="table-header-cell" style="width: 35%">
+          <div class="table-header-cell" style="width: 24%;">
             Test
           </div>
-          <div class="table-header-cell" style="width: 8%">
-            Priority
-          </div>
-          <div class="table-header-cell" style="width: 7%; text-align: center;">
+
+          <div class="table-header-cell" style="width: 14%; text-align: center;">
             Location
           </div>
           <div class="table-header-cell">
-            &nbsp;
+            Status
           </div>
         </div>
       </div>

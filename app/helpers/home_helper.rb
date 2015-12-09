@@ -2,10 +2,13 @@ module HomeHelper
 
  def lab_dashboard(list)
   specimen_list = []
+=begin
   priority = ["STAT", "ROUT", "OR"]
   state = {"Testing" => 0,"Received In Department"=> 1,"Received At Reception" => 1}
+
+
   (list || []).each do |specimen|
-   testing = specimen["status"].split(',').uniq.include?'Testing'
+   testing = specimen["test_status"].split(',').uniq.include?''
    act = get_action(specimen['status'].split(',').uniq[0])
    test_priority = specimen['priority'].split(',')
    life_span = specimen["lifespan"].split(',').collect{|x| x.to_i}.sort
@@ -18,8 +21,25 @@ module HomeHelper
                     'name' => specimen['patient_name'].gsub("N/A ", "")}
 
   end
+=end
+  (list || []).each do |specimen|
+    status = specimen['specimen_status'].match(/rejected/i) ? 'rejected' : specimen['test_status']
+    act = get_action(status.split(',').uniq[0])
+    specimen_list << { 'test' => specimen["test_type_name"],
+                       "action" =>  act,
+                       "location"=> specimen["department"][0..2].upcase,
+                       "accession_number" => specimen['accession_number'],
+                       "last_update_date" => specimen['last_update_date'].to_datetime,
+                       "date_ordered" => specimen['date_ordered'].to_datetime,
+                       "status"=> (status == 'started') ? 'In Progress' : ((status == 'completed') ? '<i style="color:red">Verify</i>' : status.titleize),
+                       'name' => specimen['patient_name'].gsub("N/A ", ""),
+                       'name_stub' => "***** ******"
+    }
 
-  return specimen_list.sort_by { |hsh| [state[hsh["state"]],(hsh['action'].is_a?(Array) ? hsh['action'][1] : 0),priority.index(hsh['priority']),hsh['test']] }
+  end
+
+  return specimen_list.sort_by { |hsh| [hsh["last_update_date"],  hsh["date_ordered"], hsh['accession_number'], hsh['status'], hsh['name']] }.reverse
+
  end
 
  def lab_registration(specimens)
@@ -104,6 +124,15 @@ module HomeHelper
             "Drawn" => ["viability"],"Verification Pending" => "<span>View</span>",
             "Verified" => "<span style='color:red;'>Print</span>"}
  return action[state]
+ end
+
+ def get_action_new(state)
+   action = {"pending" => "<span style='color:red;'>Draw sample</span>",
+             "started" => ["viability"],"Testing" => "<span>In Progress</span>",
+             "specimen-rejected" => "<span style='color:red;'>Re-Order Test</span>",
+             "completed" => "<span>Print</span>",
+             "verified" => "<span style='color:red;'>Print</span>"}
+   return action[state]
  end
 
  def record_classification(viability,priority, status)

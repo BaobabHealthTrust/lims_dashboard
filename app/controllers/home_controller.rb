@@ -25,7 +25,7 @@ class HomeController < ApplicationController
 
  def ajax_lab_reception_list
 
-  list = Specimen.new().get_specimens('labreception',"'Drawn'")
+  list = Specimen.new().get_specimens('labreception','pending')
   result = view_context.lab_registration(list).to_json
   render :text => result
  end
@@ -48,7 +48,7 @@ class HomeController < ApplicationController
  end
 
  def ajax_lab_reception_stats
-  status = Status.new().get_status(params[:type],params[:location])
+  status = Status.new().get_status(params[:type], params[:ward], params[:location])
   render :text => status.to_json
  end
 

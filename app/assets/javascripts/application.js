@@ -46,6 +46,7 @@ function reloadTable(section, data, keys, container)
                     {
                         html = html + "<div class='base-cell' style=" +(isNaN(parseFloat(keys[w][1])) ? '' : 'width:'+keys[w][1] +'%')+">" +
                             drawProgressBar(data[i][keys[w][0]][1]) +"</div>"
+
                     }
                     else{
                         html = html + "<div class='base-cell' style=" +(isNaN(parseFloat(keys[w][1])) ? '' : 'width:'+keys[w][1] +'%;text-align:'+keys[w][2])+">"+
