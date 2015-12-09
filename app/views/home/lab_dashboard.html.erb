@@ -13,8 +13,8 @@
             fields.push(['name_stub', 23, 'left']);
             <% end %>
             fields.push(['accession_number', 18,'left']);
-            fields.push(['test', 24, 'left']);
-            fields.push( ['location', 14,'center']);
+            fields.push(['test', 27, 'left']);
+            fields.push( ['priority', 12,'center']);
             fields.push(['status', '', 'center']);
 
             reloadTable('dataSection',data,fields, "main_container");
@@ -23,7 +23,6 @@
     function updateStats(){
         link = "/home/ajax_lab_reception_stats?type=lab_department&location="+ '<%= params[:location].titleize rescue "unknown" %>';
         getStats(link);
-
     }
 
     function displayResults(statistics)
@@ -41,9 +40,9 @@
         }*/
     }
 
-    setTimeout("updateStats()", 5)
+    setTimeout("updateStats()", 5);
 
-    setInterval("updateStats()", 5000)
+    setInterval("updateStats()", 5000);
 
 </script>
 
@@ -60,12 +59,12 @@
           <div class="table-header-cell" style="width: 18%;">
             Accession No.
           </div>
-          <div class="table-header-cell" style="width: 24%;">
+          <div class="table-header-cell" style="width: 27%;">
             Test
           </div>
 
-          <div class="table-header-cell" style="width: 14%; text-align: center;">
-            Location
+          <div class="table-header-cell" style="width: 12%; text-align: center;">
+            Priority
           </div>
           <div class="table-header-cell">
             Status

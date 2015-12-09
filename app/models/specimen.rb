@@ -7,13 +7,11 @@ class Specimen
   data = JSON.parse(RestClient.get(url))
  end
 
- def get_specimens(department,status=nil,location = nil)
+ def get_specimens(status=nil)
   setting = Settings.new()
   url = "http://#{setting.get_setting('username')}:#{setting.get_setting('password')}@#{setting.get_setting('ip_address')}:#{setting.get_setting('port')}/api/dashboard_stats?"
-  params = {:date => DateTime.now.to_s(:db), :dashboard_type => department}
-  params[:status] = status if !status.blank?
-  params[:ward] = location if !location.blank?
+  url= url + "test_status=pending,not-received&specimen_status=specimen-not-collected"
 
-  data = JSON.parse(RestClient.get(url, params))
+  data = JSON.parse(RestClient.get(url))
  end
 end

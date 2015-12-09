@@ -9,7 +9,15 @@
   function handleResults(data){
     if (data.length > -1)
     {
-        reloadTable('dataSection',data,[['name', 25, 'left'],['department', 40, 'left'],['priority', 6.5, 'center'], ['action', '', 'left']], "tableContainer")
+        reloadTable('dataSection',data,
+                [
+                    ['name', 24, 'left'],
+                    ['test', 33, 'left'],
+                    ['department', 10, 'left'],
+                    ['priority', 7, 'center'],
+                    ['action', 13, 'left']
+                ],
+                "tableContainer")
     }
   }
   function updateStats(){
@@ -36,8 +44,9 @@
       }
   }
 
-  setTimeout("updateRecords()", 2000)
-  setInterval("updateStats()", 60000)
+  setTimeout("updateStats()", 5);
+
+  setInterval("updateStats()", 15000);
 
 </script>
 
@@ -72,13 +81,16 @@
             <div class="table-header-cell" style="width: 25%">
               Patient
             </div>
-            <div class="table-header-cell" style="width: 40%">
-              Test Department(s)
+            <div class="table-header-cell" style="width: 35%">
+              Test
             </div>
-            <div class="table-header-cell" style="width: 5%">
+            <div class="table-header-cell" style="width: 10%">
+              Location
+            </div>
+            <div class="table-header-cell" style="width: 7%">
               Priority
             </div>
-            <div class="table-header-cell">
+            <div class="table-header-cell"  style="width: 13%">
               Viability
             </div>
           </div>

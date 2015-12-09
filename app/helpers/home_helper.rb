@@ -24,6 +24,11 @@ module HomeHelper
 =end
   (list || []).each do |specimen|
     status = specimen['specimen_status'].match(/rejected/i) ? 'rejected' : specimen['test_status']
+    life_span = specimen["lifespan"].split(',').collect{|x| x.to_i}.sort
+    test_priority = specimen['priority'].split(',')
+    display_priority = (((test_priority.include?'S') ? 'STAT' : ((test_priority.include?'R') ? 'ROUT' : 'OR'))).upcase
+    viability = calculate_viability(specimen["date_ordered"], life_span[0])
+
     act = get_action(status.split(',').uniq[0])
     specimen_list << { 'test' => specimen["test_type_name"],
                        "action" =>  act,
@@ -33,6 +38,8 @@ module HomeHelper
                        "date_ordered" => specimen['date_ordered'].to_datetime,
                        "status"=> (status == 'started') ? 'In Progress' : ((status == 'completed') ? '<i style="color:red">Verify</i>' : status.titleize),
                        'name' => specimen['patient_name'].gsub("N/A ", ""),
+                       'priority' => display_priority,
+                       'class' => record_classification(viability[1],display_priority, status),
                        'name_stub' => "***** ******"
     }
 
@@ -47,6 +54,8 @@ module HomeHelper
   priority = ["STAT", "ROUT", "OR"]
   specimen_list = []
 
+=begin
+
   (specimens || []).each do |specimen|
 
    life_span = specimen["lifespan"].split(',').collect{|x| x.to_i}.sort
@@ -59,6 +68,25 @@ module HomeHelper
                     'class' => record_classification(viability[1],display_priority, specimen['status'])}
 
   end
+=end
+
+   (specimens || []).each do |specimen|
+     status = specimen['specimen_status'].match(/rejected/i) ? 'rejected' : specimen['test_status']
+
+     life_span = specimen["lifespan"].split(',').collect{|x| x.to_i}.sort
+     test_priority = specimen['priority'].split(',')
+     display_priority = (((test_priority.include?'S') ? 'STAT' : ((test_priority.include?'R') ? 'ROUT' : 'OR'))).upcase
+     viability = calculate_viability(specimen["date_ordered"], life_span[0])
+     specimen_list << { 'priority' => display_priority,
+                        'test' => specimen["test_type_name"],
+                        'status' => status,
+                        'department' => specimen["department"][0..2].upcase,
+                        "action" => viability,
+                        'name' => specimen['patient_name'].gsub("N/A ", ""),
+                        'class' => record_classification(viability[1],display_priority, status)}
+
+   end
+
   return specimen_list.sort_by { |hsh| [hsh["action"][1],priority.index(hsh['priority']),hsh['test']] }
  end
 
@@ -138,7 +166,7 @@ module HomeHelper
  def record_classification(viability,priority, status)
   if priority.upcase == "STAT"
    return "urgent"
-  elsif viability <= 30 && (["Drawn","Received At Reception","Received In Department","Testing"].include?status)
+  elsif viability <= 30 && (["rejected","pending","started","not-received"].include?status.downcase)
    return "urgent"
   else
    return "normal"

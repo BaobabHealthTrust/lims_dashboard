@@ -3,13 +3,13 @@ class HomeController < ApplicationController
  end
 
  def registration_dashboard
-  status = Status.new().get_status('lab_reception',params[:location])
-  @ordered = status['Drawn']
-  @received = status['Received At Reception']
-  @testing = status['Testing']
-  @tested = status['Tested']
-  @pending = status['Received In Department']
-  @turn_around = (status["avg_tat_in_min"].blank? ? 0 : status["avg_tat_in_min"]).to_s + " mins"
+  status = Status.new().get_status('lab_reception','', params[:location])
+  @ordered = status['ordered']
+  @received = status['received']
+  @testing = status['started']
+  @tested = status['completed']
+  @pending = status['pending']
+  @turn_around = "-" #(status["avg_tat_in_min"].blank? ? 0 : status["avg_tat_in_min"]).to_s + " mins"
 
  end
 
@@ -25,7 +25,7 @@ class HomeController < ApplicationController
 
  def ajax_lab_reception_list
 
-  list = Specimen.new().get_specimens('labreception','pending')
+  list = Specimen.new().get_specimens('pending')
   result = view_context.lab_registration(list).to_json
   render :text => result
  end
@@ -38,7 +38,7 @@ class HomeController < ApplicationController
 
  def ajax_nurse_dashboard_list
 
-  list = Specimen.new().get_specimens('ward',"'Ordered','Drawn','Test Rejected', 'Sample Rejected', 'Result Rejected', 'Verified','Tested'", params[:location])
+  list = Specimen.new().get_specimens("'Ordered','Drawn','Test Rejected', 'Sample Rejected', 'Result Rejected', 'Verified','Tested'")
   render :text => view_context.nurse_dashboard(list).to_json
  end
 
