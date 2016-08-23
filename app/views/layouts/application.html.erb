@@ -1,76 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>LIMS Dashboard</title>
+  <title>BlisDashboard</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
-
-  <style>
-      #progressbar {
-          margin-right: auto;
-          margin-left: auto;
-          width: 94%;
-          background-color: #ffffff;
-          border: 1px solid darkolivegreen;
-          border-radius: 13px; /* (height of inner div) / 2 + padding */
-          padding: 1px;
-      }
-
-      #progressbar > div {
-          background-color: #119922;
-          width: 95%; /* Adjust with JavaScript */
-          height: 15px;
-          border-radius: 10px;
-          margin: 1px;
-      }
-      .even{
-          background-color: gainsboro;
-      }
-      .urgent{
-          border:5px solid #FF3300;
-      }
-  </style>
-  <script type="text/javascript">
-     <% @datetime = DateTime.now %>
-      server_date = new Date('<%= @datetime.year%>', (parseInt('<%= @datetime.month%>') - 1), '<%= @datetime.day%>',
-              '<%= @datetime.hour%>', '<%= @datetime.min%>', '<%= @datetime.sec%>');
-
-      window.onload=function(){
-          GetClock();
-          setInterval(GetClock,10000);
-          document.getElementById('main').style.height = (window.innerHeight -
-                  (document.getElementById('header').offsetHeight +
-                          document.getElementById("footer").offsetHeight + 11)) + "px";
-
-      }
-
-
-      function resized(){
-          document.getElementById('main').style.height = (window.innerHeight -
-                  (document.getElementById('header').offsetHeight +
-                          document.getElementById("footer").offsetHeight + 11)) + "px";
-      }
-      function setLength(id, value)
-      {
-          document.getElementById(id).style.width = value+"%";
-      }
-
-  </script>
-
-
 </head>
-<body onresize="resized()" style="padding: 0px;margin: 0px;">
-<div class="header" id="header">
-  <span id="location"><%= params[:location].titleize rescue "" %></span>
-  <span id="clockbox"></span>
-</div>
-<div id="main" style="position:relative;margin-top:60px;overflow: hidden;">
+<style>
+
+</style>
+<body style="margin-top:0px;">
+
 <%= yield %>
-</div>
 
-<div id="footer" class="footer" >
-
-</div>
 </body>
 </html>

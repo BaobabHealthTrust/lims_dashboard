@@ -1,0 +1,352 @@
+<script>
+
+        var	scrolling = false;
+
+        var height;
+
+        var yJump = 0.002*window.innerHeight;
+
+        var scrollDelay = 10;
+
+        var department = "<%= params[:department]%>".toLowerCase().trim();
+
+        function __$(id){
+            return document.getElementById(id);
+        }
+
+</script>
+<style>
+
+    #progressbar {
+        margin-right: auto;
+        margin-left: auto;
+        width: 94%;
+        background-color: #ffffff;
+        border: 1px solid darkolivegreen;
+        border-radius: 13px; /* (height of inner div) / 2 + padding */
+        padding: 1px;
+    }
+
+    #progressbar > div {
+        background-color: #119922;
+        width: 95%; /* Adjust with JavaScript */
+        height: 15px;
+        border-radius: 10px;
+        margin: 1px;
+    }
+
+    #header{
+        width: 100%;
+        height: 6.5vh;
+        color: #ffffff;
+        background: mediumblue;
+        box-shadow: 3px 2px 5px 3px rgba(0,0,0,0.50);
+        -moz-box-shadow:   3px 2px 5px 3px rgba(0,0,0,0.50);
+        -webkit-box-shadow: 3px 2px 5px 3px rgba(0,0,0,0.50);
+        border: 1px solid white;
+        font-size: 1.7em;
+    }
+
+    #dash{
+        position: fixed;
+        top: 12.5vh;
+        left: 0.5%;
+        width: 99%;
+        height: 81vh;
+        font-size: 1.5em;
+        overflow: auto;
+        padding-right: 29px;
+        background: white;
+        background-color: white;
+    }
+
+    #footer{
+        position: fixed;
+        bottom: 2px;
+        left: 0.5%;
+        width: 99%;
+        height: 5vh;
+        color: #000000;
+        background: lightsteelblue;
+        border: 1px solid white;
+        padding-bottom: 5px;
+        font-size: 1.6em;
+        box-shadow: 3px 2px 5px 3px rgba(0,0,0,0.50);
+        -moz-box-shadow:   3px 2px 5px 3px rgba(0,0,0,0.50);
+        -webkit-box-shadow: 3px 2px 5px 3px rgba(0,0,0,0.50);
+    }
+
+    #data-tabl{
+        width: 100%;
+        padding: 0px;
+        margin: 0px;
+    }
+
+    .data{
+        padding-left: 15px;
+        font-size: 1.15em;
+        padding: 5px;
+        line-height: 45px;
+
+    }
+
+    .data-row{
+    }
+
+    #data-tabl tr:nth-child(even) {
+        background: lightgrey;
+    }
+
+    .red-color{
+        color: red !important;
+    }
+    table{
+        width: 100%;
+        font-family: 'Arial, Helvetica, sans-serif';
+    }
+
+    #time{
+        text-align: right;
+        padding-right: 15px;
+    }
+    #department{
+        text-align: left;
+        padding-left: 8px;
+        font-weight: bold;
+    }
+    #department, #time{
+        padding-top: 5px;
+    }
+
+    .footer-data{
+    }
+    html{
+        padding: 0px !important;
+        margin: 0px !important;
+        background: #f8f8ff;
+    }
+    body{
+        padding: 0px !important;
+        height: 98.3vh;
+        background: white;
+    }
+
+    .inner-header td{
+        font-size: 1.5em;
+        border-left: 0.5px solid gray;
+        padding: 5px;
+        text-align: center;
+        font-weight: 600;
+        background: #dedba7;
+    }
+
+    #inner-header-table{
+        width: 100%;
+        border: 1px solid gray;
+        margin:auto;
+        box-shadow: 3px 2px 5px 3px rgba(0,0,0,0.50);
+        -moz-box-shadow:   3px 2px 5px 3px rgba(0,0,0,0.50);
+        -webkit-box-shadow: 3px 2px 5px 3px rgba(0,0,0,0.50);
+    }
+		
+		.red-background{
+				background: red;
+		}
+</style>
+<div id="container">
+    <div id="header">
+        <table id="nav-bar-table">
+            <tr>
+              <td style="width: 60%;" id="department"><%= @department%></td>
+              <td style="width: 40%;" id="time"><%= @time%></td>
+            </tr>
+        </table>
+    </div>
+    <div id="middle-header" style="width: 100%;">
+        <table id="inner-header-table">
+          <tr class="inner-header">
+            <td style="width: 25%;border-left: none;" > <span class="inner-header-data" >Patient Name</span></td>
+            <td style="width: 19.25%;" > <span class="inner-header-data"> Accession No.</span></td>
+            <td style="width: 18%;" > <span class="inner-header-data">Test(s)</span></td>
+            <td style="width: 10%;" > <span class="inner-header-data"> Priority </span></td>
+            <td style="width: 13%;" > <span class="inner-header-data"> Status </span></td>
+            <td style="" > <span class="inner-header-data">&nbsp;</span></td>
+          </tr>
+        </table>
+    </div>
+    <div id="dash">
+      <table id="data-tabl">
+
+      </table>
+    </div>
+
+    <div id="footer">
+      <table>
+        <tr>
+          <td style="width: 28%;" id="department">Tests Ordered: <span class="footer-data" id="tests-ordered"><%= ''%></span></td>
+          <td style="width: 30%;" id="department">Tests Being Processed: <span class="footer-data" id="being-processed"><%= ''%></span></td>
+          <td style="width: 33%;" id="department">Results Pending Verification: <span class="footer-data" id="pending-verification"><%= ''%></span></td>
+        </tr>
+      </table>
+    </div>
+</div>
+<script>
+
+    function updateDashboard(data){
+        if (data.length == 0) {
+            return;
+        }
+
+        $(".data").remove();
+        $(".data-row").remove();
+
+        var widths = [25, 20, 18, 10, 13];
+        var keys = ["patient_name", "accession_number", "test_type_name", "priority", "test_status", "lifespan"];
+
+        for(var n in data){
+            if(data[n]['department'] != department){
+                continue;
+            }
+
+            var row = document.createElement("tr");
+            row.className = "data-row";
+
+            for (var i = 0; i < keys.length; i ++){
+
+                var td = document.createElement("td");
+                td.className = "data";
+								
+                if(keys[i] == 'priority' && data[n]['priority'].match("S")){
+                    td.className += " red-background"
+                }
+
+                if (keys[i] == "lifespan"){
+                    td.innerHTML = drawProgressBar(data[n][keys[i]])
+                }else {
+                    <% if (params[:no_name]).to_s == "true" %>
+                    if(keys[i] == "patient_name") {
+                        td.innerHTML = "****** ******";
+                    }else{
+                        td.innerHTML = data[n][keys[i]];
+                    }
+                    <% else %>
+                        td.innerHTML = data[n][keys[i]];
+                    <% end %>
+                }
+
+                if (widths[i]) {
+                    td.style.width = widths[i] + "%";
+                }
+
+                row.appendChild(td);
+            }
+            __$("data-tabl").appendChild(row);
+
+        }
+
+			if(scrolling == false){
+			
+				setTimeout("pageScroll()", 10000);				
+				
+			}
+
+    }
+
+    function drawProgressBar(width)
+    {
+
+        return "<div id='progressbar'>" + '<div style="width:'+width+'%; background-color:'+
+                (width > 70 ? '#119922' : (width > 30 ? '#FFFF00' : '#CC0000')) +'"></div>' + "</div>"
+
+    }
+
+    function nodpt(){
+        __$("dash").innerHTML = "<div style='position:absolute;top:40vh; left: 30%; font-style: italic; '> Missing department name!</div>";
+    }
+		
+		function pageScroll() {
+
+				scrolling = true;
+
+				height = __$("dash").scrollTop;
+
+				__$("dash").scrollTop += yJump;
+
+				if (height == __$("dash").scrollTop){
+
+						scrollDelay = 10000;
+
+						if(height != 0){
+
+							yJump = -0.002*window.innerHeight;
+
+						}else{
+
+							yJump = 0.002*window.innerHeight;
+						}
+				}else{
+
+						scrollDelay = 10;
+
+				}
+
+				setTimeout("pageScroll()",scrollDelay);
+				
+		}
+
+    function ajaxDataRequest(){
+
+        $.ajax({
+
+            url: '/lab_department?department=' + department,
+
+            success: function (data) {
+
+                data = JSON.parse(data);
+
+                if (data["time"]) {
+
+                    __$("time").innerHTML = data["time"];
+
+                }
+
+                if (data["data"]) {
+
+                    updateDashboard(data["data"]);
+
+                }
+
+                if (data["stats"]) {
+
+                    __$("tests-ordered").innerHTML = data["stats"]["ordered"];
+
+                    __$("being-processed").innerHTML = (parseInt(data["stats"]["pending"]) +
+                            parseInt(data["stats"]["started"]));
+
+                    __$("pending-verification").innerHTML = data["stats"]["completed"];
+
+                }
+
+            }
+
+        });
+    }
+
+    __$("dash").style.height = (0.81*window.innerHeight) + "px";
+
+
+    <% if params[:department].blank?%>
+
+        nodpt();
+
+    <% else %>
+
+        ajaxDataRequest();
+
+        setInterval(function() {
+            ajaxDataRequest();
+        }, 20000);
+
+    <% end %>
+
+</script>
