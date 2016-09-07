@@ -303,7 +303,7 @@
             success: function (data) {
 
                 data = JSON.parse(data);
-
+console.log(data);
                 if (data["time"]) {
 
                     __$("time").innerHTML = data["time"];
@@ -332,7 +332,6 @@
     }
 
     __$("dash").style.height = (0.81*window.innerHeight) + "px";
-
 
     <% if params[:department].blank?%>
 
