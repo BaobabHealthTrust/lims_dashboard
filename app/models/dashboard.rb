@@ -12,7 +12,7 @@ class Dashboard
 
     if File.exists?("#{file_name}.csv")
       data = CSV.table("#{file_name}.csv")
-      panels = []
+      panels = {}
 
       (data).each do |d|
 
@@ -21,14 +21,15 @@ class Dashboard
         next if !wards.blank? and !d[3].blank? !wards.include?(d[3].downcase.strip)
 
         test_name = d[8]
+        panels[d[4]] = {} if panels[d[4]].blank?
 
-        if !d[10].blank? and !panels.include?(d[14])
+        if !d[10].blank? and !panels[d[4]].include?(d[14])
 
           test_name = d[14]
 
-          panels << d[14]
+          panels[d[4]] << d[14]
 
-        elsif  !d[10].blank? and panels.include?(d[14])
+        elsif  !d[10].blank? and panels[d[4]].include?(d[14])
 
           next
 
