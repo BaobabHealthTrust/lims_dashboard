@@ -127,7 +127,7 @@ class Dashboard
         case d[0]
 
           when "specimen-not-collected"
-            if d[1].match(/Pending/i)
+            if d[1].match(/Pending|not\-received/i)
               result['ordered'] += d[4].to_i
             else
               result[d[1].downcase] += d[4].to_i
@@ -137,7 +137,7 @@ class Dashboard
             result['rejected'] += d[4].to_i
 
           else
-            if d[1].match(/Pending/i)
+            if d[1].match(/Pending|not\-received/i)
               result['ordered'] += d[4].to_i
             else
               result[d[1].downcase] += d[4].to_i
