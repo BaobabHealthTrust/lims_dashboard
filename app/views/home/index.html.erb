@@ -1,18 +1,18 @@
 <script>
 
-        var	scrolling = false;
+    var	scrolling = false;
 
-        var height;
+    var height;
 
-        var yJump = 0.002*window.innerHeight;
+    var yJump = 0.002*window.innerHeight;
 
-        var scrollDelay = 10;
+    var scrollDelay = 10;
 
-        var department = "<%= params[:department]%>".toLowerCase().trim();
+    var department = "<%= params[:department]%>".toLowerCase().trim();
 
-        function __$(id){
-            return document.getElementById(id);
-        }
+    function __$(id){
+        return document.getElementById(id);
+    }
 
 </script>
 <style>
@@ -148,47 +148,47 @@
         -moz-box-shadow:   3px 2px 5px 3px rgba(0,0,0,0.50);
         -webkit-box-shadow: 3px 2px 5px 3px rgba(0,0,0,0.50);
     }
-		
-		.red-background{
-				background: red;
-		}
+
+    .red-background{
+        background: red;
+    }
 </style>
 <div id="container">
-    <div id="header">
-        <table id="nav-bar-table">
-            <tr>
-              <td style="width: 60%;" id="department"><%= @department%></td>
-              <td style="width: 40%;" id="time"><%= @time%></td>
-            </tr>
-        </table>
-    </div>
-    <div id="middle-header" style="width: 100%;">
-        <table id="inner-header-table">
-          <tr class="inner-header">
-            <td style="width: 24.15%!important;border-left: none;" > <span class="inner-header-data" >Patient Name</span></td>
-            <td style="width: 19.85%;" > <span class="inner-header-data"> Accession No.</span></td>
-            <td style="width: 18%;" > <span class="inner-header-data">Test(s)</span></td>
-            <td style="width: 10%;" > <span class="inner-header-data"> Priority </span></td>
-            <td style="width: 13%;" > <span class="inner-header-data"> Status </span></td>
-            <td style="" > <span class="inner-header-data">&nbsp;</span></td>
-          </tr>
-        </table>
-    </div>
-    <div id="dash">
-      <table id="data-tabl">
+  <div id="header">
+    <table id="nav-bar-table">
+      <tr>
+        <td style="width: 60%;" id="department"><%= @department%></td>
+        <td style="width: 40%;" id="time"><%= @time%></td>
+      </tr>
+    </table>
+  </div>
+  <div id="middle-header" style="width: 100%;">
+    <table id="inner-header-table">
+      <tr class="inner-header">
+        <td style="width: 25%;border-left: none;" > <span class="inner-header-data" >Patient Name</span></td>
+        <td style="width: 19.25%;" > <span class="inner-header-data"> Accession No.</span></td>
+        <td style="width: 18%;" > <span class="inner-header-data">Test(s)</span></td>
+        <td style="width: 10%;" > <span class="inner-header-data"> Priority </span></td>
+        <td style="width: 13%;" > <span class="inner-header-data"> Status </span></td>
+        <td style="" > <span class="inner-header-data">&nbsp;</span></td>
+      </tr>
+    </table>
+  </div>
+  <div id="dash">
+    <table id="data-tabl">
 
-      </table>
-    </div>
+    </table>
+  </div>
 
-    <div id="footer">
-      <table>
-        <tr>
-          <td style="width: 28%;" id="department">Tests Ordered: <span class="footer-data" id="tests-ordered"><%= ''%></span></td>
-          <td style="width: 30%;" id="department">Tests Being Processed: <span class="footer-data" id="being-processed"><%= ''%></span></td>
-          <td style="width: 33%;" id="department">Results Pending Verification: <span class="footer-data" id="pending-verification"><%= ''%></span></td>
-        </tr>
-      </table>
-    </div>
+  <div id="footer">
+    <table>
+      <tr>
+        <td style="width: 28%;" id="department">Tests Ordered: <span class="footer-data" id="tests-ordered"><%= ''%></span></td>
+        <td style="width: 30%;" id="department">Tests Being Processed: <span class="footer-data" id="being-processed"><%= ''%></span></td>
+        <td style="width: 33%;" id="department">Results Pending Verification: <span class="footer-data" id="pending-verification"><%= ''%></span></td>
+      </tr>
+    </table>
+  </div>
 </div>
 <script>
 
@@ -215,7 +215,7 @@
 
                 var td = document.createElement("td");
                 td.className = "data";
-								
+
                 if(keys[i] == 'priority' && data[n]['priority'].match("S")){
                     td.className += " red-background"
                 }
@@ -230,7 +230,7 @@
                         td.innerHTML = data[n][keys[i]];
                     }
                     <% else %>
-                        td.innerHTML = data[n][keys[i]];
+                    td.innerHTML = data[n][keys[i]];
                     <% end %>
                 }
 
@@ -244,11 +244,11 @@
 
         }
 
-			if(scrolling == false){
-			
-				setTimeout("pageScroll()", 10000);				
-				
-			}
+        if(scrolling == false){
+
+            setTimeout("pageScroll()", 10000);
+
+        }
 
     }
 
@@ -263,36 +263,36 @@
     function nodpt(){
         __$("dash").innerHTML = "<div style='position:absolute;top:40vh; left: 30%; font-style: italic; '> Missing department name!</div>";
     }
-		
-		function pageScroll() {
 
-				scrolling = true;
+    function pageScroll() {
 
-				height = __$("dash").scrollTop;
+        scrolling = true;
 
-				__$("dash").scrollTop += yJump;
+        height = __$("dash").scrollTop;
 
-				if (height == __$("dash").scrollTop){
+        __$("dash").scrollTop += yJump;
 
-						scrollDelay = 10000;
+        if (height == __$("dash").scrollTop){
 
-						if(height != 0){
+            scrollDelay = 10000;
 
-							yJump = -0.002*window.innerHeight;
+            if(height != 0){
 
-						}else{
+                yJump = -0.002*window.innerHeight;
 
-							yJump = 0.002*window.innerHeight;
-						}
-				}else{
+            }else{
 
-						scrollDelay = 10;
+                yJump = 0.002*window.innerHeight;
+            }
+        }else{
 
-				}
+            scrollDelay = 10;
 
-				setTimeout("pageScroll()",scrollDelay);
-				
-		}
+        }
+
+        setTimeout("pageScroll()",scrollDelay);
+
+    }
 
     function ajaxDataRequest(){
 
@@ -320,8 +320,7 @@
 
                     __$("tests-ordered").innerHTML = data["stats"]["ordered"];
 
-                    __$("being-processed").innerHTML = (parseInt(data["stats"]["pending"]) +
-                            parseInt(data["stats"]["started"]));
+                    __$("being-processed").innerHTML = data["stats"]["started"];
 
                     __$("pending-verification").innerHTML = data["stats"]["completed"];
 
@@ -337,15 +336,15 @@
 
     <% if params[:department].blank?%>
 
-        nodpt();
+    nodpt();
 
     <% else %>
 
-        ajaxDataRequest();
+    ajaxDataRequest();
 
-        setInterval(function() {
-            ajaxDataRequest();
-        }, 20000);
+    setInterval(function() {
+        ajaxDataRequest();
+    }, 20000);
 
     <% end %>
 
