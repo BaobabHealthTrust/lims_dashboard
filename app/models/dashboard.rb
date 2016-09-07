@@ -2,9 +2,9 @@ require "csv"
 
 class Dashboard
 
-	def self.get_data(departments=[], wards=[])
+  def self.get_data(departments=[], wards=[])
 
-		file_name = "/tmp/orders"
+    file_name = "/tmp/orders"
 
     result = []
 
@@ -56,7 +56,7 @@ class Dashboard
           when "Verified"
             test_status = "<span class='red-color'>Print</span>"
 
-					when "Started"
+          when "Started"
             test_status = "<span>In-Progress</span>"
 
         end
@@ -126,13 +126,21 @@ class Dashboard
         case d[0]
 
           when "specimen-not-collected"
-            result['ordered'] += d[4].to_i
+            if d[1].match(/Pending/i)
+              result['ordered'] += d[4].to_i
+            else
+              result[d[1].downcase] += d[4].to_i
+            end
 
           when "specimen-rejected"
             result['rejected'] += d[4].to_i
 
           else
-            result[d[1].downcase] += d[4].to_i
+            if d[1].match(/Pending/i)
+              result['ordered'] += d[4].to_i
+            else
+              result[d[1].downcase] += d[4].to_i
+            end
 
         end
 
