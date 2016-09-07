@@ -21,7 +21,7 @@ class Dashboard
         next if !wards.blank? and !d[3].blank? !wards.include?(d[3].downcase.strip)
 
         test_name = d[8]
-        panels[d[4]] = {} if panels[d[4]].blank?
+        panels[d[4]] = [] if panels[d[4]].blank?
 
         if !d[10].blank? and !panels[d[4]].include?(d[14])
 
